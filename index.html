@@ -849,7 +849,7 @@ function renderPlayers(){
       <div class="role-cell${p.roleRevealed?' revealed':''}" id="rolecell-${p.id}" onclick="toggleReveal('${p.id}')">
         <div class="role-face-wrap">
           <div class="role-face front">🎭 اضغط للكشف</div>
-          <div class="role-face back">${p.role}</div>
+          <div class="role-face back">${p.votePublicRole || p.role}</div>
         </div>
       </div>` : ''}
       <div class="card-btns">
@@ -1032,6 +1032,7 @@ function revivePlayer(id, ev){
   const p = players.find(p=>p.id===id);
   if(!p || !p.dead) return;
   p.dead = false;
+  p.votePublicRole = null;
   save();
   renderPlayers();
   logEvent(`↩️ تم إرجاع ${p.name} للحياة`);
@@ -1109,8 +1110,13 @@ function closeNightSummaryModal(){
 }
 
 function startNight(){
-  if(nightActive){
-    alert('🌙 الليل ابتدى فعلاً، اضغط "الصباح" عشان تكشف النتيجة');
+  const mafiaTargets = players.filter(p=>p.markedKill && !p.dead);
+  const crazyTargets = players.filter(p=>p.markedCrazy && !p.dead);
+  const hunterTargets = players.filter(p=>p.markedHunter && !p.dead);
+  const spyTargets = players.filter(p=>p.markedSpy && !p.dead);
+  const elderTargets = players.filter(p=>p.markedElder);
+  if(mafiaTargets.length===0 && crazyTargets.length===0 && hunterTargets.length===0 && spyTargets.length===0 && elderTargets.length===0){
+    alert('ما فيه أي استهداف هذا الراوند (مافيا/مجنون/هنتر/جاسوس/شايب)، حدد الأهداف أول.');
     return;
   }
   nightActive = true;
@@ -1458,6 +1464,7 @@ function assignRole(playerId, roleName){
   if(!p || !r || r.count<=0) return;
   p.role = roleName;
   p.roleRevealed = false;
+  p.votePublicRole = null;
   r.count -= 1;
   save();
   renderRoles();
@@ -1643,12 +1650,13 @@ let roomCode = null;
 // إعدادات ICE مع سيرفرات TURN احتياطية — STUN لوحده كثير ما يشتغل على شبكات الجوال/الواي فاي العام
 // (NAT صارم)، فيعلّق الاتصال بدون أي خطأ واضح. TURN يعطي طريق بديل عشان الاتصال يكتمل.
 const PEER_ICE_CONFIG = {
-  iceServers: [
-    { urls: 'stun:stun.l.google.com:19302' },
-    { urls: 'turn:openrelay.metered.ca:80', username:'openrelayproject', credential:'openrelayproject' },
-    { urls: 'turn:openrelay.metered.ca:443', username:'openrelayproject', credential:'openrelayproject' },
-    { urls: 'turn:openrelay.metered.ca:443?transport=tcp', username:'openrelayproject', credential:'openrelayproject' }
-  ]
+    iceServers: [
+        { urls: 'stun:stun.l.google.com:19302' },
+        { urls: 'stun:stun1.l.google.com:19302' },
+        { urls: 'stun:stun2.l.google.com:19302' },
+        { urls: 'stun:stun3.l.google.com:19302' },
+        { urls: 'stun:stun4.l.google.com:19302' }
+    ]
 };
 let votingActive = false;
 let lastNightSummary = null; // {round, lines}
@@ -1664,6 +1672,12 @@ function isMafiaRole(roleName){
 // الجاسوس يُحسب مع فريق المافيا بحساب الفوز (مو بقدراته اللي تبقى مستقلة)، بس إذا كان فيه مافيا حقيقي باللعبة
 function isMafiaAligned(roleName){
   return isMafiaRole(roleName) || roleName === 'جاسوس';
+}
+
+// الكشف العلني (زي بعد التصويت) ما يفضح إلا المافيا أو الجاسوس، وأي رول ثاني (دكتور/شايب/هنتر/مجنون...) يطلع "مواطن"
+function publicRoleFor(roleName){
+  if(isMafiaRole(roleName) || roleName === 'جاسوس') return roleName;
+  return 'مواطن';
 }
 
 function checkWinCondition(){
@@ -1861,8 +1875,9 @@ function endVoting(){
   const out = players.find(p=>p.id === winners[0]);
   out.dead = true;
   out.roleRevealed = true;
+  out.votePublicRole = out.role ? publicRoleFor(out.role) : null;
   save(); renderPlayers();
-  logEvent(`⚖️ تم طرد ${out.name} بالتصويت — كان روله: ${out.role||'غير معروف'}`, `⚖️ تم طرد ${out.name} بالتصويت${out.role?(' — كان روله: '+out.role):''}`);
+  logEvent(`⚖️ تم طرد ${out.name} بالتصويت — كان روله: ${out.votePublicRole||'غير معروف'}`, `⚖️ تم طرد ${out.name} بالتصويت${out.votePublicRole?(' — كان روله: '+out.votePublicRole):''}`);
   checkWinCondition();
 }
 
