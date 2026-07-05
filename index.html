@@ -1905,8 +1905,13 @@ function startHosting(){
   if(typeof Peer === 'undefined'){ alert('تعذر تحميل مكتبة الاتصال، تأكد من وجود إنترنت.'); return; }
   roomCode = generateRoomCode();
   document.getElementById('hostBtn').textContent = '⏳ يتم التفعيل...';
-  hostPeer = new Peer('veo-mafia-'+roomCode, {config: PEER_ICE_CONFIG});
-  hostPeer.on('open', ()=>{
+hostPeer = new Peer('veo-mafia-' + roomCode, {
+    host: '0.peerjs.com',
+    port: 443,
+    secure: true,
+    pingInterval: 5000,
+    config: PEER_ICE_CONFIG
+});  hostPeer.on('open', ()=>{
     hosting = true;
     document.getElementById('hostBtn').style.display = 'none';
     document.getElementById('onlineLive').style.display = 'flex';
@@ -2559,8 +2564,13 @@ function initPlayerMode(code){
   document.getElementById('pvBody').innerHTML = '<div class="pv-status">⏳ يتم الاتصال بالهوست...</div>';
   clearTimeout(_pvConnectAttemptTimer);
 
-  const myPeer = new Peer(undefined, {config: PEER_ICE_CONFIG});
-  let settled = false;
+const myPeer = new Peer(undefined, {
+    host: '0.peerjs.com',
+    port: 443,
+    secure: true,
+    pingInterval: 5000,
+    config: PEER_ICE_CONFIG
+});  let settled = false;
 
   _pvConnectAttemptTimer = setTimeout(()=>{
     if(settled) return;
