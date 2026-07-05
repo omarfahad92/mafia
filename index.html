@@ -52,6 +52,23 @@ body{
 .btn-endround{background:linear-gradient(135deg,var(--emerald-bright),var(--emerald)); color:#1c1826; border:none; border-radius:9px; padding:9px 14px; font-size:13px; font-weight:800; cursor:pointer; transition:transform .15s, filter .15s; width:100%;}
 .btn-endround:hover{filter:brightness(1.15);}
 .btn-endround:active{transform:scale(.96);}
+.phase-indicator{text-align:center; font-size:12.5px; font-weight:800; color:var(--gold-bright); background:#00000040; border:1px solid #d9b45c33; border-radius:9px; padding:7px 10px; margin-bottom:8px;}
+.phase-btns{display:flex; gap:8px; width:100%;}
+.btn-phase{flex:1; border:none; border-radius:9px; padding:9px 8px; font-size:13px; font-weight:800; cursor:pointer; transition:transform .15s, filter .15s; color:#1c1826;}
+.btn-phase:hover{filter:brightness(1.15);}
+.btn-phase:active{transform:scale(.96);}
+.btn-phase.night{background:linear-gradient(135deg,#8aa0e8,#3a4fae); color:#fff;}
+.btn-phase.day{background:linear-gradient(135deg,var(--gold-bright),var(--gold-dim));}
+.night-summary-box{max-width:900px; margin:0 auto 20px; padding:16px 20px;}
+.night-summary-box .log-entry{border-right:2px solid var(--blood-bright); margin-bottom:6px;}
+.reg-row{display:flex; gap:8px; margin:14px 0;}
+.reg-row input{flex:1; min-width:0; border-radius:10px; border:1px solid #d9b45c44; background:#00000040; color:var(--text); padding:11px 14px; font-size:14px; text-align:right; font-family:inherit;}
+.mafia-chat-panel{position:fixed; inset:0; margin:auto; width:380px; max-width:90vw; height:480px; max-height:80vh; background:linear-gradient(170deg,#2a0f14f7,#160810f7); border:1px solid #8f152166; border-radius:20px; box-shadow:0 20px 60px #000000c0; z-index:400; display:flex; flex-direction:column; transform:scale(.9); opacity:0; pointer-events:none; transition:.25s;}
+.mafia-chat-panel.open{transform:scale(1); opacity:1; pointer-events:auto;}
+.mafia-chat-panel .log-header{color:#ff8a95;}
+.mafia-chat-members{padding:8px 18px; font-size:11.5px; color:var(--text-dim); border-bottom:1px solid #8f152133;}
+.pv-mafia-chat{background:#2a0f14cc; border:1px solid #8f152155; border-radius:16px; padding:14px 16px; margin-top:16px;}
+.pv-mafia-chat .pv-section-title{color:#ff8a95; margin-top:0;}
 .timer-box{min-width:220px; padding:16px 20px; text-align:center; display:flex; flex-direction:column; align-items:center;}
 .box-title{display:flex; align-items:center; justify-content:center; gap:9px; font-weight:800; font-size:15px; margin-bottom:12px; letter-spacing:.3px; color:var(--gold-bright);}
 .box-title .icon{background:#00000040; border:1px solid #d9b45c44; border-radius:7px; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--gold);}
@@ -268,10 +285,6 @@ footer{text-align:center; margin-top:24px; opacity:.55; font-size:13px; letter-s
 .win-actions{position:relative; z-index:1; display:flex; gap:10px; justify-content:center;}
 
 .role-assign{margin-bottom:14px;}
-.night-summary-box{max-width:420px;}
-.night-summary-body{display:flex; flex-direction:column; gap:8px; margin:14px 0; max-height:280px; overflow-y:auto;}
-.night-summary-line{background:#00000035; border:1px solid #ffffff14; border-radius:10px; padding:9px 14px; font-size:14px; text-align:right;}
-.night-summary-hint{font-size:12px; color:var(--text-dim); text-align:center; margin-top:6px;}
 .assign-label{font-size:13px; color:var(--text-dim); margin-bottom:10px;}
 .assign-btns{display:flex; flex-wrap:wrap; gap:8px; justify-content:center;}
 .role-assign-btn{background:linear-gradient(135deg,var(--gold-bright),var(--gold-dim)); color:#1c1826; border:none; border-radius:8px; padding:7px 14px; font-size:13px; font-weight:800; cursor:pointer; transition:transform .15s;}
@@ -346,7 +359,6 @@ footer{text-align:center; margin-top:24px; opacity:.55; font-size:13px; letter-s
 .pv-kill-panel.elder-panel{background:#0f1f2acc; border-color:#2f8a9455;}
 .pv-kill-panel.hunter-panel{background:#2a1c0fcc; border-color:#a85a1f55;}
 .pv-kill-panel.crazy-panel{background:#240f2acc; border-color:#a03f8a55;}
-.pv-kill-panel.mafia-team-panel{background:#160a0ccc; border-color:#8f152166;}
 .pv-elder-btn{width:100%; text-align:right; background:linear-gradient(135deg,#7fd8e0,#2f8a94); border:none; color:#08151c; padding:10px 14px; border-radius:10px; font-size:14px; font-weight:800; cursor:pointer; margin-bottom:8px;}
 .pv-elder-btn:active{transform:scale(.97);}
 .pv-timer{text-align:center; font-family:'Amiri',serif; font-size:26px; font-weight:800; color:var(--gold-bright); margin:16px 0;}
@@ -392,7 +404,92 @@ footer{text-align:center; margin-top:24px; opacity:.55; font-size:13px; letter-s
 
 .btn-resetall{background:linear-gradient(135deg,#ff8a5c,#a83f1f); color:#fff; box-shadow:0 6px 18px #a83f1f55; width:100%; margin-top:10px;}
 .app-logo{width:72px; height:72px; border-radius:50%; display:block; margin:0 auto 10px; object-fit:cover; border:2px solid var(--gold); box-shadow:0 0 22px #d9b45c55;}
+
+/* ================= واجهة اللاعب: بادج الطور + ملخص الليلة + نتيجة التصويت + تأثير جوي ================= */
+.pv-phase-badge{
+  text-align:center; font-weight:800; font-size:13px; padding:9px 14px; border-radius:12px;
+  margin-bottom:14px; letter-spacing:.4px; transition:background .6s ease, color .6s ease, border-color .6s ease;
+  border:1px solid #d9b45c33; background:#00000040; color:var(--gold-bright);
+}
+.pv-phase-badge.phase-night{background:linear-gradient(135deg,#1a2450,#0c1230); color:#aebdf5; border-color:#3a4fae66;}
+.pv-phase-badge.phase-day{background:linear-gradient(135deg,var(--gold-bright),var(--gold-dim)); color:#1c1826; border-color:#d9b45c;}
+
+.pv-night-summary{
+  background:linear-gradient(170deg,#1a1430ee,#0c0a18ee); border:1px solid #d9b45c55; border-radius:16px;
+  padding:16px 18px; margin-bottom:18px; box-shadow:0 12px 30px #00000070;
+  animation:pvSummaryIn .5s cubic-bezier(.2,.8,.3,1);
+}
+.pv-night-summary.pv-vote-result{border-color:#3fd08a55;}
+.pv-night-summary-title{font-weight:800; color:var(--gold-bright); font-size:14px; margin-bottom:10px; text-align:center;}
+.pv-night-summary-line{font-size:13px; color:var(--text); background:#00000030; border-radius:8px; padding:7px 12px; margin-bottom:6px; line-height:1.6;}
+@keyframes pvSummaryIn{from{opacity:0; transform:translateY(-14px) scale(.96);} to{opacity:1; transform:translateY(0) scale(1);}}
+
+.pv-crazy-subtitle{font-weight:800; font-size:12.5px; color:var(--gold-bright); margin:10px 0 6px;}
+
+/* تأثير الليل والنهار على واجهة اللاعب بالكامل */
+#playerView{transition:filter 1.1s ease, background 1.1s ease;}
+#playerView.pv-atmosphere-night{
+  filter:brightness(.82) saturate(.85) contrast(1.05);
+}
+#playerView.pv-atmosphere-night .main-panel{
+  box-shadow:0 0 60px #0b0f2f99, inset 0 1px 0 #ffffff0f;
+  border-color:#3a4fae44;
+}
+#playerView.pv-atmosphere-day .main-panel{
+  box-shadow:0 0 70px #d9b45c33, inset 0 1px 0 #ffffff14;
+  border-color:#d9b45c55;
+  animation:pvDayGlow 1.2s ease;
+}
+@keyframes pvDayGlow{
+  0%{box-shadow:0 0 0px #d9b45c00;}
+  50%{box-shadow:0 0 90px #d9b45c55;}
+  100%{box-shadow:0 0 70px #d9b45c33;}
+}
+
+/* بطاقة الدور: زجاجية فخمة + تفاعل بالإمساك المطوّل بدل الضغطة العادية */
+.pv-role-cell{
+  transition:transform .2s ease;
+  -webkit-tap-highlight-color:transparent; user-select:none; touch-action:manipulation;
+}
+.pv-role-cell:active{transform:scale(.97);}
+.pv-role-face.front{
+  background:linear-gradient(160deg,#00000060,#00000030);
+  backdrop-filter:blur(6px);
+  box-shadow:inset 0 1px 0 #ffffff14, 0 8px 20px #00000050;
+}
+.pv-role-face.back{
+  box-shadow:0 8px 24px #d9b45c55, inset 0 1px 0 #ffffff33;
+}
+
+/* ================= استجابة الجوال (Responsive) ================= */
+@media (max-width: 720px){
+  body{padding:12px;}
+  h1{font-size:26px;}
+  .subtitle{font-size:11px; margin-bottom:18px; letter-spacing:1px;}
+  .main-panel{padding:20px 12px 26px; border-radius:18px;}
+  .top-row{flex-direction:column; gap:10px; margin-bottom:14px;}
+  .roles-box, .rules-box, .remain-box, .round-box, .timer-box{min-width:0; width:100%; padding:12px 14px;}
+  .add-row{flex-direction:column; gap:8px;}
+  .add-row input{width:100%; box-sizing:border-box;}
+  .action-row{gap:8px;}
+  .action-row .btn{flex:1 1 auto; min-width:120px; padding:10px 10px; font-size:12px;}
+  .cards{gap:12px;}
+  .card{min-width:0; width:100%; padding:14px; box-sizing:border-box;}
+  .night-summary-box{padding:12px 14px;}
+  .mafia-chat-panel{width:94vw; height:70vh;}
+  .pv-self-card{padding:16px; border-radius:14px;}
+  .pv-role-cell{max-width:100%;}
+  .pv-kill-panel{padding:12px;}
+  .reg-row{flex-direction:column;}
+  .reg-row input{width:100%; box-sizing:border-box;}
+  .chat-input-row{flex-direction:row;}
+}
+@media (max-width: 420px){
+  .action-row .btn{min-width:100%; flex-basis:100%;}
+  .phase-btns{flex-direction:row;}
+}
 </style>
+
 </head>
 <body>
 <div class="grain"></div>
@@ -476,8 +573,11 @@ footer{text-align:center; margin-top:24px; opacity:.55; font-size:13px; letter-s
         </div>
       </div>
     </div>
-    <button class="btn btn-endround" id="startNightBtn" onclick="startNight()">🌙 ابدأ الليل</button>
-    <button class="btn btn-endround" id="endNightBtn" style="display:none; background:linear-gradient(135deg,#f3d68a,#d9b45c); color:#1c1826;" onclick="endMorning()">☀️ الصباح (كشف نتيجة الليلة)</button>
+    <div class="phase-indicator" id="phaseIndicator">⏳ بانتظار توزيع الرولات</div>
+    <div class="phase-btns">
+      <button class="btn-phase night" onclick="goNightPhase()">🌙 ليل</button>
+      <button class="btn-phase day" onclick="goDayPhase()">☀️ صباح</button>
+    </div>
     <div class="round-abilities">
       <button class="rab doctor" title="دكتور" onclick="openDoctorProtect()">🩺</button>
       <button class="rab elder" title="شايب" onclick="openElderPeek()">👁️</button>
@@ -529,13 +629,20 @@ footer{text-align:center; margin-top:24px; opacity:.55; font-size:13px; letter-s
     <button class="btn btn-distribute" onclick="distributeRoles()">🎭 توزيع الرولات</button>
     <button class="btn btn-roulette" onclick="openRoulette()">🎡 روليت</button>
     <button class="btn btn-hide" onclick="hideAllRoles()">🙈 إخفاء كل الرولات</button>
+    <button class="btn btn-hide" onclick="revealAllRoles()">🔓 كشف كل الأدوار للاعبين</button>
     <button class="btn btn-log" onclick="toggleLog()">📜 السجل</button>
     <button class="btn btn-chat" onclick="toggleChat()">💬 شات</button>
-    <button class="btn btn-vote" id="startVoteBtn" onclick="startVoting()">🗳️ بدء تصويت</button>
+    <button class="btn btn-vote" onclick="toggleMafiaChat()">🕶️ شات المافيا (مراقبة)</button>
     <button class="btn btn-resetall" onclick="resetEverything()" style="width:auto;">🔄 إعادة تعيين الكل</button>
   </div>
 
+  <div class="glass night-summary-box" id="nightSummaryBox" style="display:none">
+    <div class="box-title"><span class="icon">🌙</span> ملخص الليلة</div>
+    <div id="nightSummaryContent"></div>
+  </div>
+
   <div class="glass vote-box" id="voteBox" style="display:none"></div>
+  <div class="glass vote-box" id="voteResultBox" style="display:none"></div>
 
   <div class="cards" id="cards"></div>
 
@@ -593,15 +700,6 @@ footer{text-align:center; margin-top:24px; opacity:.55; font-size:13px; letter-s
   </div>
 </div>
 
-<div class="roulette-modal" id="nightSummaryModal">
-  <div class="roulette-box night-summary-box">
-    <button class="modal-close" onclick="closeNightSummaryModal()">✕</button>
-    <h2 id="nightSummaryTitle">☀️ ملخص الليلة</h2>
-    <div id="nightSummaryBody" class="night-summary-body"></div>
-    <div class="night-summary-hint">💬 ناقشوا اللي صار، وبعدين الهوست يبدأ التصويت لما يكون جاهز.</div>
-  </div>
-</div>
-
 <div class="log-panel" id="logPanel">
   <div class="log-header">
     <span>📜 سجل الأحداث</span>
@@ -622,6 +720,15 @@ footer{text-align:center; margin-top:24px; opacity:.55; font-size:13px; letter-s
   </div>
 </div>
 
+<div class="mafia-chat-panel" id="mafiaChatPanel">
+  <div class="log-header">
+    <span>🕶️ شات المافيا السري (مراقبة الهوست)</span>
+    <button class="modal-close" onclick="toggleMafiaChat()">✕</button>
+  </div>
+  <div class="mafia-chat-members" id="mafiaChatMembersBar">لا يوجد أعضاء بعد</div>
+  <div class="log-list" id="mafiaChatList"></div>
+</div>
+
 <div class="timer-end-banner" id="timerEndBanner">⏰ انتهى الوقت!</div>
 
 <script>
@@ -639,7 +746,6 @@ let players = JSON.parse(localStorage.getItem('veo_players')||'null') || [];
 let gameLog = JSON.parse(localStorage.getItem('veo_log')||'null') || [];
 let publicLog = [];
 let chatMessages = []; // {sender, text, time, isHost}
-let mafiaChatMessages = []; // {sender, text, time} — خاص بالمافيا (والجاسوس المكتشف)
 let killLimit = JSON.parse(localStorage.getItem('veo_killLimit')||'null') ?? 1;
 let protectLimit = JSON.parse(localStorage.getItem('veo_protectLimit')||'null') ?? 1;
 let roundNumber = JSON.parse(localStorage.getItem('veo_round')||'null') ?? 1;
@@ -654,6 +760,12 @@ let crazyUsesTotal = JSON.parse(localStorage.getItem('veo_crazyUsesTotal')||'nul
 let hunterUsesTotal = JSON.parse(localStorage.getItem('veo_hunterUsesTotal')||'null') ?? 0;
 let gameEnded = false;
 let gameEndedInfo = null;
+let gamePhase = JSON.parse(localStorage.getItem('veo_phase')||'null') || 'lobby'; // 'lobby' | 'night' | 'day'
+let nightSummaryLines = JSON.parse(localStorage.getItem('veo_nightSummary')||'null') || null;
+let mafiaChatMessages = JSON.parse(localStorage.getItem('veo_mafiaChat')||'null') || [];
+let mafiaChatMemberIds = JSON.parse(localStorage.getItem('veo_mafiaMembers')||'null') || [];
+let lastVoteResult = JSON.parse(localStorage.getItem('veo_lastVoteResult')||'null') || null;
+let allRolesRevealed = JSON.parse(localStorage.getItem('veo_allRolesRevealed')||'null') || false;
 
 function save(){
   localStorage.setItem('veo_roles', JSON.stringify(roles));
@@ -669,6 +781,12 @@ function save(){
   localStorage.setItem('veo_spyUses', JSON.stringify(spyUsesThisRound));
   localStorage.setItem('veo_crazyUsesTotal', JSON.stringify(crazyUsesTotal));
   localStorage.setItem('veo_hunterUsesTotal', JSON.stringify(hunterUsesTotal));
+  localStorage.setItem('veo_phase', JSON.stringify(gamePhase));
+  localStorage.setItem('veo_nightSummary', JSON.stringify(nightSummaryLines));
+  localStorage.setItem('veo_mafiaChat', JSON.stringify(mafiaChatMessages));
+  localStorage.setItem('veo_mafiaMembers', JSON.stringify(mafiaChatMemberIds));
+  localStorage.setItem('veo_lastVoteResult', JSON.stringify(lastVoteResult));
+  localStorage.setItem('veo_allRolesRevealed', JSON.stringify(allRolesRevealed));
 }
 function saveLog(){
   localStorage.setItem('veo_log', JSON.stringify(gameLog));
@@ -849,7 +967,7 @@ function renderPlayers(){
       <div class="role-cell${p.roleRevealed?' revealed':''}" id="rolecell-${p.id}" onclick="toggleReveal('${p.id}')">
         <div class="role-face-wrap">
           <div class="role-face front">🎭 اضغط للكشف</div>
-          <div class="role-face back">${p.votePublicRole || p.role}</div>
+          <div class="role-face back">${p.role}</div>
         </div>
       </div>` : ''}
       <div class="card-btns">
@@ -873,6 +991,7 @@ function renderPlayers(){
                 ? `<button class="cbtn crazy" disabled>🃏 ما فيه قتلات متاحة</button>`
                 : `<button class="cbtn crazy" onclick="toggleMarkCrazy('${p.id}', event)">🃏 قتلة مجنون</button>`)
         ) : ''}
+        ${(!p.dead && hasAliveCrazy) ? `<button class="cbtn protect${(p.protected && p.protectedByCrazyId)?' active':''}" onclick="toggleMarkCrazyProtect('${p.id}', event)">🛡️ ${(p.protected && p.protectedByCrazyId)?'إلغاء حماية المجنون':'حماية المجنون'}</button>` : ''}
         <button class="cbtn del" onclick="deletePlayer('${p.id}', event)">حذف</button>
       </div>
     `;
@@ -897,6 +1016,10 @@ function hideAllRoles(){
 }
 
 function distributeRoles(){
+  if(gamePhase !== 'lobby'){
+    alert('🚫 اللعبة بدأت بالفعل. اضغط "إعادة تعيين الكل" لو تبي تبدأ لعبة جديدة من الصفر.');
+    return;
+  }
   const unassigned = players.filter(p=>!p.dead && !p.role);
   if(unassigned.length === 0){
     alert('كل اللاعبين عندهم رول بالفعل، احذف رولاتهم أول لو تبي تعيد التوزيع');
@@ -926,22 +1049,26 @@ function distributeRoles(){
   }
   gameEnded = false;
   gameEndedInfo = null;
+  allRolesRevealed = false;
   closeWinOverlay();
-  players.forEach(p=>{ p.elderKnownRole = null; p.spyKnownRole = null; p.spyJoinedMafia = false; });
+  players.forEach(p=>{ p.elderKnownRole = null; p.spyKnownRole = null; });
+
+  // فتح شات المافيا السري تلقائيًا لو فيه مافيتين أو أكثر
+  const mafiaPlayers = players.filter(p=>isMafiaRole(p.role));
+  mafiaChatMemberIds = mafiaPlayers.map(p=>p.id);
   mafiaChatMessages = [];
-  nightActive = false;
-  lastNightSummary = null;
-  closeNightSummaryModal();
-  const startNightBtnEl = document.getElementById('startNightBtn');
-  const endNightBtnEl = document.getElementById('endNightBtn');
-  if(startNightBtnEl) startNightBtnEl.style.display = '';
-  if(endNightBtnEl) endNightBtnEl.style.display = 'none';
+  renderMafiaChatPanel();
+
   save(); renderRoles(); renderPlayers();
   if(leftover > 0){
     logEvent(`🎭 تم توزيع الرولات على ${n} لاعب، و${leftover} لاعب صاروا مواطنين`);
   } else {
     logEvent(`🎭 تم توزيع الرولات على ${n} لاعب`);
   }
+  if(mafiaPlayers.length >= 2){
+    logEvent(`🕶️ تم فتح شات المافيا السري تلقائيًا (${mafiaPlayers.length} أعضاء)`);
+  }
+  startNightInternal(true);
 }
 
 function addPlayer(){
@@ -985,7 +1112,6 @@ function cardCenter(id){
 }
 
 function toggleMarkKill(id, ev){
-  if(!nightActive){ alert('🌙 لازم تبدأ الليل أول من زر "ابدأ الليل"'); return; }
   const p = players.find(p=>p.id===id);
   if(!p || p.dead) return;
   if(!p.markedKill){
@@ -1002,7 +1128,6 @@ function toggleMarkKill(id, ev){
 }
 
 function toggleMarkProtect(id, ev){
-  if(!nightActive){ alert('🌙 لازم تبدأ الليل أول من زر "ابدأ الليل"'); return; }
   const p = players.find(p=>p.id===id);
   if(!p || p.dead) return;
   if(!p.protected){
@@ -1032,14 +1157,12 @@ function revivePlayer(id, ev){
   const p = players.find(p=>p.id===id);
   if(!p || !p.dead) return;
   p.dead = false;
-  p.votePublicRole = null;
   save();
   renderPlayers();
   logEvent(`↩️ تم إرجاع ${p.name} للحياة`);
 }
 
 function toggleMarkSpy(id, ev){
-  if(!nightActive){ alert('🌙 لازم تبدأ الليل أول من زر "ابدأ الليل"'); return; }
   const p = players.find(p=>p.id===id);
   if(!p || p.dead) return;
   if(!p.markedSpy){
@@ -1056,7 +1179,6 @@ function toggleMarkSpy(id, ev){
 }
 
 function toggleMarkHunter(id, ev){
-  if(!nightActive){ alert('🌙 لازم تبدأ الليل أول من زر "ابدأ الليل"'); return; }
   const p = players.find(p=>p.id===id);
   if(!p || p.dead) return;
   if(p.markedHunter){
@@ -1075,11 +1197,14 @@ function toggleMarkHunter(id, ev){
 }
 
 function toggleMarkCrazy(id, ev){
-  if(!nightActive){ alert('🌙 لازم تبدأ الليل أول من زر "ابدأ الليل"'); return; }
   const p = players.find(p=>p.id===id);
   if(!p || p.dead) return;
   if(p.markedCrazy){
     alert('🚫 المجنون اختار هدفه بالفعل وما يقدر يغيره، هذا اختيار نهائي طول اللعبة.');
+    return;
+  }
+  if(players.some(pl=>pl.protectedByCrazyId)){
+    alert('🚫 المجنون اختار الحماية هالراوند بالفعل، ما يقدر يحمي ويقتل بنفس الوقت.');
     return;
   }
   const activeCount = players.filter(pl=>pl.markedCrazy && !pl.dead).length;
@@ -1093,58 +1218,116 @@ function toggleMarkCrazy(id, ev){
   logEvent(`🃏 تحديد هدف المجنون (اختيار نهائي): ${p.name}`, null);
 }
 
-
-function showNightSummaryModal(lines, round){
-  const modal = document.getElementById('nightSummaryModal');
-  const body = document.getElementById('nightSummaryBody');
-  if(!modal || !body) return;
-  document.getElementById('nightSummaryTitle').textContent = `☀️ ملخص الليلة ${round}`;
-  body.innerHTML = lines.length
-    ? lines.map(l=>`<div class="night-summary-line">${l}</div>`).join('')
-    : '<div class="log-empty">😴 الليلة كانت هادئة، محد سوى شي</div>';
-  modal.classList.add('open');
-}
-
-function closeNightSummaryModal(){
-  document.getElementById('nightSummaryModal')?.classList.remove('open');
-}
-
-function startNight(){
-  const mafiaTargets = players.filter(p=>p.markedKill && !p.dead);
-  const crazyTargets = players.filter(p=>p.markedCrazy && !p.dead);
-  const hunterTargets = players.filter(p=>p.markedHunter && !p.dead);
-  const spyTargets = players.filter(p=>p.markedSpy && !p.dead);
-  const elderTargets = players.filter(p=>p.markedElder);
-  if(mafiaTargets.length===0 && crazyTargets.length===0 && hunterTargets.length===0 && spyTargets.length===0 && elderTargets.length===0){
-    alert('ما فيه أي استهداف هذا الراوند (مافيا/مجنون/هنتر/جاسوس/شايب)، حدد الأهداف أول.');
+// حماية المجنون (بديل القتل هالراوند) — يستخدمها الهوست يدويًا لو المجنون لاعب محلي (مو أونلاين)
+function toggleMarkCrazyProtect(id, ev){
+  const p = players.find(p=>p.id===id);
+  if(!p || p.dead) return;
+  if(p.protected && p.protectedByCrazyId){
+    p.protected = false;
+    p.protectedByCrazyId = null;
+    save();
+    renderPlayers();
+    logEvent(`↩️ المجنون ألغى حمايته عن ${p.name}`, null);
     return;
   }
-  nightActive = true;
-  nightSummary = [];
-  logEvent(`🌙 بدأ الليل رقم ${roundNumber} — اللاعبون اللي عندهم قدرات بيستخدمونها الحين`);
-  document.getElementById('startNightBtn').style.display = 'none';
-  document.getElementById('endNightBtn').style.display = '';
-  broadcastState();
+  if(players.some(pl=>pl.markedCrazy && !pl.dead)){
+    alert('🚫 المجنون اختار القتل هالراوند بالفعل، ما يقدر يحمي ويقتل بنفس الوقت.');
+    return;
+  }
+  players.forEach(pl=>{ if(pl.protectedByCrazyId){ pl.protected = false; pl.protectedByCrazyId = null; } });
+  p.protected = true;
+  p.protectedByCrazyId = 'host-manual';
+  save();
+  renderPlayers();
+  logEvent(`🛡️ المجنون اختار يحمي: ${p.name}`, null);
 }
 
-function endMorning(){
-  if(!nightActive) return;
-  nightActive = false;
-  
+/* ================= دورة الليل والنهار (Night/Day Phase Cycle) ================= */
+
+function renderPhaseUI(){
+  const el = document.getElementById('phaseIndicator');
+  if(el){
+    el.textContent = gamePhase==='lobby' ? '⏳ بانتظار توزيع الرولات'
+      : gamePhase==='night' ? `🌙 الطور الحالي: الليل — راوند ${roundNumber}`
+      : `☀️ الطور الحالي: النهار — راوند ${roundNumber}`;
+  }
+}
+
+function showNightSummary(){
+  const box = document.getElementById('nightSummaryBox');
+  const content = document.getElementById('nightSummaryContent');
+  if(!box || !content) return;
+  if(!nightSummaryLines){ box.style.display = 'none'; return; }
+  content.innerHTML = nightSummaryLines.map(l=>`<div class="log-entry">${l}</div>`).join('');
+  box.style.display = 'block';
+}
+
+// بدء طور الليل (يدويًا من الهوست، أو تلقائيًا بعد كشف نتيجة التصويت)
+function startNightInternal(isFirst){
+  votingActive = false;
+  votes = {};
+  const voteBoxEl = document.getElementById('voteBox');
+  if(voteBoxEl) voteBoxEl.style.display = 'none';
+  gamePhase = 'night';
+  nightSummaryLines = null;
+  if(!isFirst) roundNumber += 1;
+  elderUsesThisRound = 0;
+  spyUsesThisRound = 0;
+  save();
+  showNightSummary();
+  renderRoundBox();
+  renderPhaseUI();
+  logEvent(`🌙 بدأ الليل — راوند ${roundNumber}`, `🌙 بدأ الليل — راوند ${roundNumber}`);
+  if(typeof hosting !== 'undefined' && hosting) broadcastState();
+}
+
+function goNightPhase(){
+  if(gamePhase === 'lobby'){ alert('🚫 لازم توزّع الرولات أول قبل ما تبدأ الليل.'); return; }
+  if(gamePhase === 'night'){ alert('🌙 إحنا بالفعل بطور الليل.'); return; }
+  startNightInternal(false);
+}
+
+// إنهاء الليل وحل كل القدرات، ثم الانتقال للنهار وفتح التصويت تلقائيًا
+function goDayPhase(){
+  if(gamePhase !== 'night'){
+    alert('🚫 لازم تكون بطور الليل عشان تقدر تنهيه وتنتقل للنهار.');
+    return;
+  }
   const mafiaTargets = players.filter(p=>p.markedKill && !p.dead);
   const crazyTargets = players.filter(p=>p.markedCrazy && !p.dead);
   const hunterTargets = players.filter(p=>p.markedHunter && !p.dead);
   const spyTargets = players.filter(p=>p.markedSpy && !p.dead);
   const elderTargets = players.filter(p=>p.markedElder);
-  
+
   let resultLines = [];
   let spyReveals = [];
   let elderReveals = [];
 
-  function resolveKill(p, source=''){
+  // الشايب والدكتور لازم يموتوا "بصمت" بدون كشف هويتهم أبداً بأي سبب موت (ليل أو تصويت)
+  function isSensitiveRole(roleName){
+    return roleName === 'شايب' || roleName === 'دكتور';
+  }
+
+  // يبني سطر الموت العام (اللي يشوفه كل اللاعبين بملخص الليلة) حسب نوع القاتل
+  function publicDeathLine(p, cause){
+    if(isSensitiveRole(p.role)){
+      return `💀 مات اللاعب ${p.name}`;
+    }
+    if(cause === 'mafia'){
+      return `💀 ${p.name} — تم قتل مواطن الليلة`;
+    }
+    if(cause === 'crazy'){
+      return isMafiaRole(p.role)
+        ? `💀 ${p.name} — قُتل الليلة (كان روله: ${p.role})`
+        : `💀 ${p.name} — تم قتل مواطن الليلة`;
+    }
+    return `💀 ${p.name} — قُتل الليلة`;
+  }
+
+  function resolveKill(p, cause){
     if(p.dead) return false;
     if(p.protected){
-      nightSummary.push(`🛡️ ${p.name} — استُهدفت بس نجت بالحماية`);
+      resultLines.push(`🛡️ ${p.name} — استُهدفت بس نجت`);
       const {x,y,el} = cardCenter(p.id);
       if(el){
         el.classList.add('fx-blocked');
@@ -1158,50 +1341,40 @@ function endMorning(){
       return false;
     }
     killWithFx(p);
-    nightSummary.push(`💀 ${p.name} — قُتل${source?' بواسطة '+source:''}`);
-    resultLines.push(`💀 ${p.name} — قُتل الليلة`);
+    resultLines.push(publicDeathLine(p, cause));
     return true;
   }
 
-  mafiaTargets.forEach(p=> {
-    if(resolveKill(p, 'المافيا')){
-      // ما نطلع الرول، بس نقول قُتل
-      nightSummary[nightSummary.length-1] = `💀 ${p.name} — قُتل الليلة`;
-    }
-  });
-  crazyTargets.forEach(p=>{ 
-    if(resolveKill(p, 'المجنون')){
-      // ما نطلع الرول
-      nightSummary[nightSummary.length-1] = `💀 ${p.name} — قُتل الليلة`;
-    }
-    crazyUsesTotal += 1;
-  });
+  mafiaTargets.forEach(p=> resolveKill(p, 'mafia'));
+  crazyTargets.forEach(p=>{ resolveKill(p, 'crazy'); crazyUsesTotal += 1; });
 
+  // الهنتر: هدفه يموت دائمًا. لو طلع مافيا يُعلن رولها، غير كذا يُخفى الرول تمامًا
   hunterTargets.forEach(p=>{
     hunterUsesTotal += 1;
-    if(isMafiaRole(p.role)){
-      killWithFx(p);
-      nightSummary.push(`🏹 ${p.name} — صادها الهنتر (مافيا/جاسوس مكتشف)`);
-      resultLines.push(`🏹 ${p.name} — صادها الهنتر وطلعت مافيا`);
+    if(p.dead) return;
+    killWithFx(p);
+    if(isSensitiveRole(p.role)){
+      resultLines.push(`💀 مات اللاعب ${p.name}`);
+    } else if(isMafiaRole(p.role)){
+      resultLines.push(`🏹 ${p.name} — صادها الهنتر، طلع رولها: ${p.role}`);
     } else {
-      const hunter = players.find(h=>!h.dead && h.role==='هنتر');
-      if(hunter){
-        killWithFx(hunter);
-        nightSummary.push(`🏹 الهنتر ${hunter.name} — صاد بريء وانتحر بس`);
-        resultLines.push(`🏹 ${hunter.name} — صاد بريء بالغلط ومات`);
-      }
+      resultLines.push(`🏹 ${p.name} — مات بصدمة عكسية من طلقة الهنتر`);
     }
   });
 
-  const spyActor = players.find(pl=>!pl.dead && pl.role==='جاسوس');
   spyTargets.forEach(p=>{
     spyUsesThisRound += 1;
     const revealText = p.role || 'بدون رول';
     spyReveals.push(`${p.name}: ${revealText}`);
     p.spyKnownRole = revealText;
-    if(isMafiaRole(p.role) && spyActor && !spyActor.spyJoinedMafia){
-      spyActor.spyJoinedMafia = true;
-      nightSummary.push(`🕵️ الجاسوس اكتشف مافيا (${p.name})`);
+    // لو الجاسوس اكتشف مافيا، ينضم فورًا وسريًا لشات المافيا
+    if(isMafiaRole(p.role)){
+      const spyPlayer = players.find(pl=>!pl.dead && pl.role==='جاسوس');
+      if(spyPlayer && !mafiaChatMemberIds.includes(spyPlayer.id)){
+        mafiaChatMemberIds.push(spyPlayer.id);
+        renderMafiaChatPanel();
+        logEvent('🕶️ الجاسوس اكتشف هوية مافيا وانضم سريًا لشاتهم الخاص', null);
+      }
     }
   });
 
@@ -1215,6 +1388,7 @@ function endMorning(){
     p.elderKnownRole = revealText;
   });
 
+  // إشعار الجاسوس أونلاين بنتيجة تجسسه (سري، ما يظهر بسجل عام)
   if(spyReveals.length && typeof hosting !== 'undefined' && hosting){
     const spyPlayer = players.find(pl=>!pl.dead && pl.role==='جاسوس');
     if(spyPlayer){
@@ -1225,6 +1399,7 @@ function endMorning(){
     }
   }
 
+  // إشعار الشايب أونلاين بنتيجة سؤاله بعد نهاية الراوند فقط
   if(elderReveals.length && typeof hosting !== 'undefined' && hosting){
     const elderPlayer = players.find(pl=>!pl.dead && pl.role==='شايب');
     if(elderPlayer){
@@ -1238,44 +1413,40 @@ function endMorning(){
   players.forEach(p=>{
     p.markedKill = false;
     p.protected = false;
+    p.protectedByCrazyId = null;
     p.markedCrazy = false;
     p.markedHunter = false;
     p.markedSpy = false;
     p.markedElder = false;
   });
-  roundNumber += 1;
-  elderUsesThisRound = 0;
-  spyUsesThisRound = 0;
+
+  nightSummaryLines = resultLines.length ? resultLines.slice() : ['😴 ما صار شي هذي الليلة، الجميع نجا بسلام'];
+  gamePhase = 'day';
   save();
   setTimeout(()=>renderPlayers(), 550);
   renderRoundBox();
-  
+  renderPhaseUI();
   showNightSummary();
-  
-  if(resultLines.length) logEvent(`🌙 نتيجة الليل: ${resultLines.join(' | ')}`);
+
   if(spyReveals.length){
     logEvent(`🕵️ نتائج الجاسوس: ${spyReveals.join(' | ')}`, null);
-    alert(`🕵️ نتائج تجسس هذا الراوند:\n${spyReveals.join('\n')}`);
+    const spyPlayer = players.find(pl=>!pl.dead && pl.role==='جاسوس');
+    if(spyPlayer) alert(`🕵️ نتائج تجسس ${spyPlayer.name} هذا الراوند:\n${spyReveals.join('\n')}`);
   }
   if(elderReveals.length){
     logEvent(`👁️ نتيجة سؤال الشايب: ${elderReveals.join(' | ')}`, null);
-    alert(`👁️ نتائج سؤال الشايب:\n${elderReveals.join('\n')}`);
+    const elderPlayer = players.find(pl=>!pl.dead && pl.role==='شايب');
+    if(elderPlayer) alert(`👁️ نتيجة سؤال ${elderPlayer.name} هذا الراوند:\n${elderReveals.join('\n')}`);
   }
-  if(elderReveals.length){
-    logEvent(`👁️ نتيجة سؤال الشايب: ${elderReveals.join(' | ')}`, null);
-    alert(`👁️ نتائج سؤال الشايب:\n${elderReveals.join('\n')}`);
-  }
-  checkWinCondition();
-  if(!gameEnded) startVoting();
-  document.getElementById('startNightBtn').style.display = '';
-  document.getElementById('endNightBtn').style.display = 'none';
-  broadcastState();
-}
 
-function showNightSummary(){
-  if(nightSummary.length === 0) return;
-  const msg = '📋 ملخص الليلة:\n\n' + nightSummary.join('\n');
-  alert(msg);
+  checkWinCondition();
+  if(!gameEnded){
+    logEvent(`☀️ بدأ النهار — ${nightSummaryLines.join(' | ')}`, `☀️ بدأ النهار`);
+    startVotingAuto();
+  } else {
+    logEvent('🏁 انتهت اللعبة مباشرة بعد نتيجة الليل');
+  }
+  if(typeof hosting !== 'undefined' && hosting) broadcastState();
 }
 
 function deletePlayer(id, ev){
@@ -1300,14 +1471,6 @@ function clearAll(){
   gameEnded = false;
   gameEndedInfo = null;
   closeWinOverlay();
-  mafiaChatMessages = [];
-  nightActive = false;
-  lastNightSummary = null;
-  closeNightSummaryModal();
-  const startNightBtnEl1 = document.getElementById('startNightBtn');
-  const endNightBtnEl1 = document.getElementById('endNightBtn');
-  if(startNightBtnEl1) startNightBtnEl1.style.display = '';
-  if(endNightBtnEl1) endNightBtnEl1.style.display = 'none';
   save(); renderPlayers();
   logEvent('🧹 تم حذف كل اللاعبين');
 }
@@ -1330,9 +1493,14 @@ function resetEverything(){
   gameLog = [];
   publicLog = [];
   chatMessages = [];
-  mafiaChatMessages = [];
   votingActive = false;
   votes = {};
+  lastVoteResult = null;
+  gamePhase = 'lobby';
+  nightSummaryLines = null;
+  mafiaChatMessages = [];
+  mafiaChatMemberIds = [];
+  allRolesRevealed = false;
   clearInterval(timerInterval);
   timerRunning = false;
   timerTotal = 60;
@@ -1340,21 +1508,19 @@ function resetEverything(){
   gameEnded = false;
   gameEndedInfo = null;
   closeWinOverlay();
-  nightActive = false;
-  lastNightSummary = null;
-  closeNightSummaryModal();
 
   save(); saveLog();
   renderRoles();
   renderPlayers();
   renderLog();
   renderChatPanel();
+  renderMafiaChatPanel();
   renderRoundBox();
+  renderPhaseUI();
   updateTimerDisplay();
-  document.getElementById('startVoteBtn').style.display = '';
   document.getElementById('voteBox').style.display = 'none';
-  document.getElementById('startNightBtn').style.display = '';
-  document.getElementById('endNightBtn').style.display = 'none';
+  document.getElementById('voteResultBox').style.display = 'none';
+  showNightSummary();
 
   logEvent('🔄 تم إعادة تعيين كل شي للبداية');
   if(typeof hosting !== 'undefined' && hosting) broadcastState();
@@ -1464,7 +1630,6 @@ function assignRole(playerId, roleName){
   if(!p || !r || r.count<=0) return;
   p.role = roleName;
   p.roleRevealed = false;
-  p.votePublicRole = null;
   r.count -= 1;
   save();
   renderRoles();
@@ -1525,7 +1690,6 @@ function playPeekFx(targetId){
 }
 
 function openDoctorProtect(){
-  if(!nightActive){ alert('🌙 لازم تبدأ الليل أول من زر "ابدأ الليل"'); return; }
   const doctor = players.find(p=>!p.dead && p.role==='دكتور');
   if(!doctor){ alert('ما فيه دكتور حي باللعبة (تأكد إن اسم الرول بالضبط "دكتور")'); return; }
   const targets = players.filter(p=>!p.dead); // يشمل الدكتور نفسه، بنفس فكرة استهداف المافيا
@@ -1535,7 +1699,6 @@ function openDoctorProtect(){
 }
 
 function openElderPeek(){
-  if(!nightActive){ alert('🌙 لازم تبدأ الليل أول من زر "ابدأ الليل"'); return; }
   const activeCount = players.filter(pl=>pl.markedElder && !pl.dead).length;
   if(elderUsesThisRound + activeCount >= elderLimit){
     alert(`🚫 الشايب استخدم حد استخداماته هذا الراوند (${elderLimit})، انتظر الراوند الجاي.`);
@@ -1562,8 +1725,6 @@ let timerTotal = 60;
 let timerSeconds = 60;
 let timerInterval = null;
 let timerRunning = false;
-let nightActive = false;
-let nightSummary = [];
 
 function formatTime(s){
   const m = Math.floor(s/60).toString().padStart(2,'0');
@@ -1650,17 +1811,14 @@ let roomCode = null;
 // إعدادات ICE مع سيرفرات TURN احتياطية — STUN لوحده كثير ما يشتغل على شبكات الجوال/الواي فاي العام
 // (NAT صارم)، فيعلّق الاتصال بدون أي خطأ واضح. TURN يعطي طريق بديل عشان الاتصال يكتمل.
 const PEER_ICE_CONFIG = {
-    iceServers: [
-        { urls: 'stun:stun.l.google.com:19302' },
-        { urls: 'stun:stun1.l.google.com:19302' },
-        { urls: 'stun:stun2.l.google.com:19302' },
-        { urls: 'stun:stun3.l.google.com:19302' },
-        { urls: 'stun:stun4.l.google.com:19302' }
-    ]
+  iceServers: [
+    { urls: 'stun:stun.l.google.com:19302' },
+    { urls: 'turn:openrelay.metered.ca:80', username:'openrelayproject', credential:'openrelayproject' },
+    { urls: 'turn:openrelay.metered.ca:443', username:'openrelayproject', credential:'openrelayproject' },
+    { urls: 'turn:openrelay.metered.ca:443?transport=tcp', username:'openrelayproject', credential:'openrelayproject' }
+  ]
 };
 let votingActive = false;
-let lastNightSummary = null; // {round, lines}
-let rolesRevealedToAll = false;
 let votes = {}; // voterPlayerId -> targetPlayerId (or '__skip__')
 let voteRevealEnabled = JSON.parse(localStorage.getItem('veo_voteReveal')||'null') ?? false;
 
@@ -1672,12 +1830,6 @@ function isMafiaRole(roleName){
 // الجاسوس يُحسب مع فريق المافيا بحساب الفوز (مو بقدراته اللي تبقى مستقلة)، بس إذا كان فيه مافيا حقيقي باللعبة
 function isMafiaAligned(roleName){
   return isMafiaRole(roleName) || roleName === 'جاسوس';
-}
-
-// الكشف العلني (زي بعد التصويت) ما يفضح إلا المافيا أو الجاسوس، وأي رول ثاني (دكتور/شايب/هنتر/مجنون...) يطلع "مواطن"
-function publicRoleFor(roleName){
-  if(isMafiaRole(roleName) || roleName === 'جاسوس') return roleName;
-  return 'مواطن';
 }
 
 function checkWinCondition(){
@@ -1804,17 +1956,25 @@ function renderHostPanel(){
   el.textContent = claimed;
 }
 
-/* ---- Voting (day-phase elimination by vote) ---- */
-function startVoting(){
-  if(votingActive) return;
+/* ---- Voting (day-phase elimination by vote) — يبدأ تلقائيًا مع دخول النهار ---- */
+function startVotingAuto(){
+  if(gamePhase !== 'day') return;
   const alive = players.filter(p=>!p.dead);
-  if(alive.length < 2){ alert('لازم لاعبين أحياء اثنين على الأقل عشان تبدأ تصويت'); return; }
+  const resultBoxEl = document.getElementById('voteResultBox');
+  if(resultBoxEl) resultBoxEl.style.display = 'none';
+  lastVoteResult = null;
+  if(alive.length < 2){
+    logEvent('⏭️ ما فيه لاعبين أحياء كفاية للتصويت، رجعنا لليل مباشرة');
+    setTimeout(()=>startNightInternal(false), 300);
+    return;
+  }
   votingActive = true;
   votes = {};
-  document.getElementById('startVoteBtn').style.display = 'none';
   document.getElementById('voteBox').style.display = 'flex';
   renderVoteBox();
-  logEvent('🗳️ بدأ التصويت، صوّتوا الحين', '🗳️ بدأ التصويت، صوّتوا الحين');
+  logEvent('🗳️ بدأ التصويت تلقائيًا مع بداية النهار', '🗳️ بدأ التصويت، صوّتوا الحين');
+  save();
+  if(typeof hosting !== 'undefined' && hosting) broadcastState();
 }
 
 function renderVoteBox(){
@@ -1830,15 +1990,15 @@ function renderVoteBox(){
     <div class="box-title"><span class="icon">🗳️</span> التصويت جارٍ (${votedCount}/${alive.length})</div>
     <label class="vote-reveal-toggle">
       <input type="checkbox" ${voteRevealEnabled?'checked':''} onchange="toggleVoteReveal(this.checked)">
-      👁️ كشف نتيجة التصويت للاعبين
+      👁️ كشف نتيجة التصويت للاعبين أثناء التصويت
     </label>
     <div class="vote-tally">
       ${alive.map(p=>`<div class="vote-row"><span>${p.name}</span><b>${tally[p.id]}</b></div>`).join('')}
       <div class="vote-row vote-row-skip"><span>⏭️ تخطي (بدون طرد)</span><b>${tally['__skip__']}</b></div>
     </div>
     <div class="vote-actions">
-      <button class="btn btn-add" onclick="endVoting()">إنهاء التصويت ⚖️</button>
-      <button class="btn btn-clear" onclick="cancelVoting()">إلغاء ✖</button>
+      <button class="btn btn-add" onclick="endVoting()">إنهاء التصويت وكشف النتيجة ⚖️</button>
+      <button class="btn btn-clear" onclick="cancelVoting()">إلغاء بدون طرد ✖</button>
     </div>`;
 }
 
@@ -1848,6 +2008,20 @@ function toggleVoteReveal(val){
   if(typeof hosting !== 'undefined' && hosting) broadcastState();
 }
 
+function renderVoteResultBox(){
+  const el = document.getElementById('voteResultBox');
+  if(!el) return;
+  if(!lastVoteResult){ el.style.display = 'none'; return; }
+  el.style.display = 'flex';
+  el.innerHTML = `
+    <div class="box-title"><span class="icon">📣</span> نتيجة التصويت — من صوّت لمين</div>
+    <div class="vote-tally">
+      ${lastVoteResult.breakdown.map(b=>`<div class="vote-row"><span>${escapeHtml(b.voter)}</span><b>➡️ ${escapeHtml(b.choice)}</b></div>`).join('')}
+    </div>`;
+}
+
+// إنهاء التصويت: يحسب النتيجة، يطرد صاحب الأغلبية لو فيه، يعرض من صوّت لمين على كل الشاشات،
+// ثم يرجع تلقائيًا لطور الليل بدون أي تدخل إضافي من الهوست
 function endVoting(){
   if(!votingActive) return;
   const alive = players.filter(p=>!p.dead);
@@ -1860,63 +2034,133 @@ function endVoting(){
     if(tally[id] > max){ max = tally[id]; winners = [id]; }
     else if(tally[id] === max && max > 0){ winners.push(id); }
   });
+
+  const breakdown = alive.map(voter=>{
+    const choice = votes[voter.id];
+    let choiceName = '🤐 لم يصوّت';
+    if(choice === '__skip__') choiceName = '⏭️ تخطي';
+    else if(choice){ const t = players.find(pl=>pl.id===choice); choiceName = t ? t.name : 'غير معروف'; }
+    return {voter: voter.name, choice: choiceName};
+  });
+
   votingActive = false;
   votes = {};
-  document.getElementById('startVoteBtn').style.display = '';
   document.getElementById('voteBox').style.display = 'none';
+
+  let out = null;
   if(max === 0 || winners.length !== 1){
     logEvent('🤝 التصويت انتهى بدون طرد أحد (تعادل أو ما فيه أصوات)');
-    return;
-  }
-  if(winners[0] === '__skip__'){
+  } else if(winners[0] === '__skip__'){
     logEvent('⏭️ صوّتت الأغلبية على التخطي، ما طاح أحد هالجولة', '⏭️ صوّتت الأغلبية على التخطي، ما طاح أحد');
-    return;
+  } else {
+    out = players.find(p=>p.id === winners[0]);
+    out.dead = true;
+    const isSensitive = (out.role === 'شايب' || out.role === 'دكتور');
+    if(isSensitive){
+      out.roleRevealed = false;
+      logEvent(`⚖️ تم طرد ${out.name} بالتصويت — (روله: ${out.role})`, `💀 مات اللاعب ${out.name}`);
+    } else {
+      out.roleRevealed = true;
+      logEvent(`⚖️ تم طرد ${out.name} بالتصويت — كان روله: ${out.role||'غير معروف'}`, `⚖️ تم طرد ${out.name} بالتصويت${out.role?(' — كان روله: '+out.role):''}`);
+    }
   }
-  const out = players.find(p=>p.id === winners[0]);
-  out.dead = true;
-  out.roleRevealed = true;
-  out.votePublicRole = out.role ? publicRoleFor(out.role) : null;
-  save(); renderPlayers();
-  logEvent(`⚖️ تم طرد ${out.name} بالتصويت — كان روله: ${out.votePublicRole||'غير معروف'}`, `⚖️ تم طرد ${out.name} بالتصويت${out.votePublicRole?(' — كان روله: '+out.votePublicRole):''}`);
+
+  lastVoteResult = {
+    breakdown,
+    eliminated: out ? {name:out.name, role: (out.role==='شايب'||out.role==='دكتور') ? null : (out.role||null)} : null
+  };
+
+  save();
+  renderPlayers();
+  renderVoteResultBox();
   checkWinCondition();
+  if(typeof hosting !== 'undefined' && hosting) broadcastState();
+  if(!gameEnded){
+    setTimeout(()=>startNightInternal(false), 600);
+  }
 }
 
+// إلغاء التصويت بدون طرد أحد — ثم رجوع تلقائي لليل عشان اللعبة ما تعلّق
 function cancelVoting(){
   if(!votingActive) return;
   votingActive = false;
   votes = {};
-  document.getElementById('startVoteBtn').style.display = '';
+  lastVoteResult = null;
   document.getElementById('voteBox').style.display = 'none';
-  logEvent('❌ تم إلغاء التصويت', null);
+  document.getElementById('voteResultBox').style.display = 'none';
+  logEvent('❌ تم إلغاء التصويت بدون طرد أحد', null);
+  save();
+  if(typeof hosting !== 'undefined' && hosting) broadcastState();
+  setTimeout(()=>startNightInternal(false), 300);
 }
 
 function handleHostMessage(conn, data){
   if(!data || !data.type) return;
   if(data.type === 'hello'){
-    const taken = new Set(Object.values(hostConns).filter(e=>e.playerId).map(e=>e.playerId));
-    conn.send({type:'roster', players: players.map(p=>({id:p.id, name:p.name, taken: taken.has(p.id)}))});
+    conn.send({type:'lobbyInfo', phase: gamePhase, players: players.map(p=>({id:p.id, name:p.name, online:!!p.online, dead:!!p.dead}))});
+  } else if(data.type === 'register'){
+    const name = (data.name||'').toString().trim().slice(0,24);
+    if(!name){ conn.send({type:'registerError', message:'اكتب اسم صحيح أول'}); return; }
+
+    // لو فيه لاعب بنفس الاسم بالفعل: نعتبرها إعادة اتصال (رجع بنفس اسمه بعد ما قفل المتصفح/فقد الجلسة)
+    // بدل ما نرفضه برسالة "الاسم مشغول"
+    const existing = players.find(pl=>pl.name.trim().toLowerCase() === name.toLowerCase());
+    if(existing){
+      const clashOwner = Object.values(hostConns).find(e => e.playerId === existing.id && e.conn !== conn);
+      if(clashOwner){
+        conn.send({type:'registerError', message:'🚫 هذا الاسم متصل من جهاز ثاني بالفعل الحين، جرب اسم ثاني'});
+        return;
+      }
+      hostConns[conn.peer].playerId = existing.id;
+      existing.online = true;
+      save();
+      renderPlayers();
+      renderHostPanel();
+      conn.send({type:'claimed', playerId:existing.id, name:existing.name});
+      conn.send(buildStateFor(existing.id));
+      logEvent(`🔌 ${existing.name} رجع بنفس اسمه بعد انقطاع الاتصال`, `🔌 ${existing.name} رجع للعبة`);
+      return;
+    }
+
+    if(gamePhase !== 'lobby'){
+      conn.send({type:'registerError', message:'🚫 اللعبة بدأت بالفعل، انتظر لعبة جديدة عشان تنضم'});
+      return;
+    }
+    const newP = {
+      id: Date.now()+Math.random().toString(16).slice(2), name, dead:false, protected:false, protectedByCrazyId:null,
+      markedKill:false, markedSpy:false, markedHunter:false, markedCrazy:false, markedElder:false,
+      color: COLORS[players.length % COLORS.length], role:null, roleRevealed:false, online:true
+    };
+    players.push(newP);
+    hostConns[conn.peer].playerId = newP.id;
+    save();
+    renderPlayers();
+    renderHostPanel();
+    conn.send({type:'claimed', playerId:newP.id, name:newP.name});
+    conn.send(buildStateFor(newP.id));
+    broadcastLobby();
+    logEvent(`🪑 ${newP.name} حجز مقعده باللوبي`, `🪑 ${newP.name} انضم للعبة`);
   } else if(data.type === 'claim'){
+    // إعادة اتصال لاعب سبق وحجز مقعده (يستخدم الـ id المحفوظ بجهازه)
     const p = players.find(pl=>pl.id === data.playerId);
-    if(!p){ conn.send({type:'claimError', message:'اللاعب مو موجود بالقائمة'}); return; }
+    if(!p){ conn.send({type:'claimError', message:'مقعدك ما عاد موجود، سجّل من جديد'}); return; }
     const clashOwner = Object.values(hostConns).find(e => e.playerId === p.id && e.conn !== conn);
-    if(clashOwner){ conn.send({type:'claimError', message:'هذا الاسم متصل من جهاز ثاني بالفعل'}); return; }
+    if(clashOwner){ conn.send({type:'claimError', message:'هذا المقعد متصل من جهاز ثاني بالفعل'}); return; }
     hostConns[conn.peer].playerId = p.id;
     p.online = true;
     save();
+    renderPlayers();
     renderHostPanel();
     conn.send({type:'claimed', playerId:p.id, name:p.name});
     conn.send(buildStateFor(p.id));
-    logEvent(`🔌 ${p.name} دخل اللعبة أونلاين`, `🔌 ${p.name} دخل اللعبة`);
+    logEvent(`🔌 ${p.name} رجع يتصل باللعبة`, `🔌 ${p.name} رجع للعبة`);
   } else if(data.type === 'markKill'){
     const entry = hostConns[conn.peer];
     if(!entry || !entry.playerId) return;
+    if(gamePhase !== 'night'){ conn.send({type:'killResult', success:false, message:'🌙 قدرة المافيا تشتغل بس بالليل'}); return; }
     const shooter = players.find(pl=>pl.id === entry.playerId);
     if(!shooter || shooter.dead || !isMafiaRole(shooter.role)){
       conn.send({type:'killResult', success:false, message:'ما تقدر تستهدف'});
-      return;
-    }
-    if(!nightActive){
-      conn.send({type:'killResult', success:false, message:'🌙 لسا ما بدأ الليل'});
       return;
     }
     const target = players.find(pl=>pl.id === data.targetId);
@@ -1939,13 +2183,10 @@ function handleHostMessage(conn, data){
   } else if(data.type === 'markProtect'){
     const entry = hostConns[conn.peer];
     if(!entry || !entry.playerId) return;
+    if(gamePhase !== 'night'){ conn.send({type:'protectResult', success:false, message:'🌙 قدرة الدكتور تشتغل بس بالليل'}); return; }
     const doctor = players.find(pl=>pl.id === entry.playerId);
     if(!doctor || doctor.dead || doctor.role !== 'دكتور'){
       conn.send({type:'protectResult', success:false, message:'ما تقدر تحمي'});
-      return;
-    }
-    if(!nightActive){
-      conn.send({type:'protectResult', success:false, message:'🌙 لسا ما بدأ الليل'});
       return;
     }
     const target = players.find(pl=>pl.id === data.targetId);
@@ -1968,13 +2209,10 @@ function handleHostMessage(conn, data){
   } else if(data.type === 'elderPeek'){
     const entry = hostConns[conn.peer];
     if(!entry || !entry.playerId) return;
+    if(gamePhase !== 'night'){ conn.send({type:'elderResult', success:false, message:'🌙 قدرة الشايب تشتغل بس بالليل'}); return; }
     const elder = players.find(pl=>pl.id === entry.playerId);
     if(!elder || elder.dead || elder.role !== 'شايب'){
       conn.send({type:'elderResult', success:false, message:'ما تقدر تستخدم هذي القدرة'});
-      return;
-    }
-    if(!nightActive){
-      conn.send({type:'elderResult', success:false, message:'🌙 لسا ما بدأ الليل'});
       return;
     }
     const target = players.find(pl=>pl.id === data.targetId);
@@ -1998,13 +2236,10 @@ function handleHostMessage(conn, data){
   } else if(data.type === 'markSpy'){
     const entry = hostConns[conn.peer];
     if(!entry || !entry.playerId) return;
+    if(gamePhase !== 'night'){ conn.send({type:'spyResult', success:false, message:'🌙 قدرة الجاسوس تشتغل بس بالليل'}); return; }
     const spy = players.find(pl=>pl.id === entry.playerId);
     if(!spy || spy.dead || spy.role !== 'جاسوس'){
       conn.send({type:'spyResult', success:false, message:'ما تقدر تستخدم هذي القدرة'});
-      return;
-    }
-    if(!nightActive){
-      conn.send({type:'spyResult', success:false, message:'🌙 لسا ما بدأ الليل'});
       return;
     }
     const target = players.find(pl=>pl.id === data.targetId);
@@ -2027,13 +2262,10 @@ function handleHostMessage(conn, data){
   } else if(data.type === 'markHunter'){
     const entry = hostConns[conn.peer];
     if(!entry || !entry.playerId) return;
+    if(gamePhase !== 'night'){ conn.send({type:'hunterResult', success:false, message:'🌙 قدرة الهنتر تشتغل بس بالليل'}); return; }
     const hunter = players.find(pl=>pl.id === entry.playerId);
     if(!hunter || hunter.dead || hunter.role !== 'هنتر'){
       conn.send({type:'hunterResult', success:false, message:'ما تقدر تستخدم هذي القدرة'});
-      return;
-    }
-    if(!nightActive){
-      conn.send({type:'hunterResult', success:false, message:'🌙 لسا ما بدأ الليل'});
       return;
     }
     const target = players.find(pl=>pl.id === data.targetId);
@@ -2058,13 +2290,10 @@ function handleHostMessage(conn, data){
   } else if(data.type === 'markCrazy'){
     const entry = hostConns[conn.peer];
     if(!entry || !entry.playerId) return;
+    if(gamePhase !== 'night'){ conn.send({type:'crazyResult', success:false, message:'🌙 قدرة المجنون تشتغل بس بالليل'}); return; }
     const crazy = players.find(pl=>pl.id === entry.playerId);
     if(!crazy || crazy.dead || crazy.role !== 'مجنون'){
       conn.send({type:'crazyResult', success:false, message:'ما تقدر تستخدم هذي القدرة'});
-      return;
-    }
-    if(!nightActive){
-      conn.send({type:'crazyResult', success:false, message:'🌙 لسا ما بدأ الليل'});
       return;
     }
     const target = players.find(pl=>pl.id === data.targetId);
@@ -2074,6 +2303,10 @@ function handleHostMessage(conn, data){
     }
     if(target.markedCrazy){
       conn.send({type:'crazyResult', success:false, message:'🚫 اخترت هدفك بالفعل، هذا اختيار نهائي طول اللعبة'});
+      return;
+    }
+    if(players.some(pl=>pl.protectedByCrazyId === crazy.id)){
+      conn.send({type:'crazyResult', success:false, message:'🚫 اخترت الحماية هالراوند بالفعل، ما تقدر تحمي وتقتل بنفس الوقت'});
       return;
     }
     const activeCount = players.filter(pl=>pl.markedCrazy && !pl.dead).length;
@@ -2086,9 +2319,47 @@ function handleHostMessage(conn, data){
     renderPlayers();
     logEvent(`🃏 تحديد هدف المجنون (اختيار نهائي): ${target.name}`, null);
     broadcastState();
+  } else if(data.type === 'markCrazyProtect'){
+    const entry = hostConns[conn.peer];
+    if(!entry || !entry.playerId) return;
+    if(gamePhase !== 'night'){ conn.send({type:'crazyProtectResult', success:false, message:'🌙 قدرة المجنون تشتغل بس بالليل'}); return; }
+    const crazy = players.find(pl=>pl.id === entry.playerId);
+    if(!crazy || crazy.dead || crazy.role !== 'مجنون'){
+      conn.send({type:'crazyProtectResult', success:false, message:'ما تقدر تستخدم هذي القدرة'});
+      return;
+    }
+    const target = players.find(pl=>pl.id === data.targetId);
+    if(!target || target.dead){
+      conn.send({type:'crazyProtectResult', success:false, message:'الهدف مو متاح'});
+      return;
+    }
+    if(target.protected && target.protectedByCrazyId === crazy.id){
+      // إلغاء الحماية
+      target.protected = false;
+      target.protectedByCrazyId = null;
+      save();
+      renderPlayers();
+      logEvent(`↩️ المجنون ألغى حمايته عن ${target.name}`, null);
+      broadcastState();
+      return;
+    }
+    // المجنون يختار إما القتل أو الحماية بنفس الراوند، مو الاثنين
+    if(players.some(pl=>pl.markedCrazy && !pl.dead)){
+      conn.send({type:'crazyProtectResult', success:false, message:'🚫 اخترت القتل هالراوند بالفعل، ما تقدر تحمي وتقتل بنفس الوقت'});
+      return;
+    }
+    // إلغاء أي هدف حماية سابق لنفس المجنون هالراوند (حماية وحدة بس بكل مرة)
+    const prev = players.find(pl=>pl.protectedByCrazyId === crazy.id);
+    if(prev){ prev.protected = false; prev.protectedByCrazyId = null; }
+    target.protected = true;
+    target.protectedByCrazyId = crazy.id;
+    save();
+    renderPlayers();
+    logEvent(`🛡️ المجنون اختار يحمي: ${target.name}`, null);
+    broadcastState();
   } else if(data.type === 'castVote'){
     const entry = hostConns[conn.peer];
-    if(!entry || !entry.playerId || !votingActive) return;
+    if(!entry || !entry.playerId || !votingActive || gamePhase !== 'day') return;
     const voter = players.find(pl=>pl.id === entry.playerId);
     if(!voter || voter.dead) return;
     if(data.targetId === '__skip__'){
@@ -2102,18 +2373,6 @@ function handleHostMessage(conn, data){
     }
     renderVoteBox();
     broadcastState();
-  } else if(data.type === 'mafiaChat'){
-    const entry = hostConns[conn.peer];
-    if(!entry || !entry.playerId) return;
-    const player = players.find(pl=>pl.id === entry.playerId);
-    if(!player || player.dead) return;
-    const inMafiaChat = isMafiaRole(player.role) || !!player.spyJoinedMafia;
-    if(!inMafiaChat) return;
-    const text = (data.text||'').toString().trim().slice(0,300);
-    if(!text) return;
-    mafiaChatMessages.push({sender:player.name, text, time:nowTimeStr()});
-    if(mafiaChatMessages.length > 200) mafiaChatMessages = mafiaChatMessages.slice(-200);
-    broadcastState();
   } else if(data.type === 'chat'){
     const entry = hostConns[conn.peer];
     if(!entry || !entry.playerId) return;
@@ -2124,6 +2383,19 @@ function handleHostMessage(conn, data){
     chatMessages.push({sender:player.name, text, time:nowTimeStr(), isHost:false});
     if(chatMessages.length > 200) chatMessages = chatMessages.slice(-200);
     renderChatPanel();
+    broadcastState();
+  } else if(data.type === 'mafiaChat'){
+    const entry = hostConns[conn.peer];
+    if(!entry || !entry.playerId) return;
+    if(!mafiaChatMemberIds.includes(entry.playerId)) return;
+    const sender = players.find(pl=>pl.id === entry.playerId);
+    if(!sender || sender.dead) return;
+    const text = (data.text||'').toString().trim().slice(0,300);
+    if(!text) return;
+    mafiaChatMessages.push({sender: sender.name, text, time: nowTimeStr()});
+    if(mafiaChatMessages.length > 200) mafiaChatMessages = mafiaChatMessages.slice(-200);
+    save();
+    renderMafiaChatPanel();
     broadcastState();
   }
 }
@@ -2136,10 +2408,11 @@ function buildStateFor(playerId){
   const isSpy = !!(self && !self.dead && self.role === 'جاسوس');
   const isHunter = !!(self && !self.dead && self.role === 'هنتر');
   const isCrazy = !!(self && !self.dead && self.role === 'مجنون');
-  const inMafiaChat = !!(self && !self.dead && (isMafia || self.spyJoinedMafia));
   const alive = players.filter(p=>!p.dead);
+  const isMafiaChatMember = !!(self && mafiaChatMemberIds.includes(self.id));
   return {
     type:'state',
+    phase: gamePhase,
     self: self ? {id:self.id, name:self.name, role:self.role||null, dead:self.dead} : null,
     isMafia,
     isDoctor,
@@ -2147,31 +2420,40 @@ function buildStateFor(playerId){
     isSpy,
     isHunter,
     isCrazy,
-    players: players.map(p=>({id:p.id, name:p.name, dead:p.dead, knownRole: (isElder && p.elderKnownRole) || (isSpy && p.spyKnownRole) || (rolesRevealedToAll ? (p.role||'مواطن') : null) || null})),
-    aliveTargets: (isMafia && nightActive) ? players.filter(p=>!p.dead && p.id!==self.id).map(p=>({id:p.id,name:p.name, marked:!!p.markedKill})) : [],
+    players: players.map(p=>({
+      id:p.id, name:p.name, dead:p.dead,
+      knownRole: (isElder && p.elderKnownRole) || (isSpy && p.spyKnownRole) || null,
+      revealedRole: allRolesRevealed ? (p.role||null) : null
+    })),
+    aliveTargets: (isMafia && gamePhase==='night') ? players.filter(p=>!p.dead && p.id!==self.id).map(p=>({id:p.id,name:p.name, marked:!!p.markedKill})) : [],
     killInfo: isMafia ? {limit:killLimit, marked: players.filter(p=>p.markedKill && !p.dead).length} : null,
-    protectTargets: (isDoctor && nightActive) ? players.filter(p=>!p.dead).map(p=>({id:p.id,name:p.name, marked:!!p.protected})) : [],
-    protectInfo: isDoctor ? {limit:protectLimit, marked: players.filter(p=>p.protected && !p.dead).length} : null,
-    elderTargets: (isElder && nightActive) ? players.filter(p=>!p.dead).map(p=>({id:p.id,name:p.name, marked:!!p.markedElder})) : [],
+    protectTargets: (isDoctor && gamePhase==='night') ? players.filter(p=>!p.dead).map(p=>({id:p.id,name:p.name, marked:!!(p.protected && !p.protectedByCrazyId)})) : [],
+    protectInfo: isDoctor ? {limit:protectLimit, marked: players.filter(p=>p.protected && !p.dead && !p.protectedByCrazyId).length} : null,
+    elderTargets: (isElder && gamePhase==='night') ? players.filter(p=>!p.dead).map(p=>({id:p.id,name:p.name, marked:!!p.markedElder})) : [],
     elderInfo: isElder ? {used: elderUsesThisRound + players.filter(p=>p.markedElder && !p.dead).length, limit: elderLimit} : null,
-    spyTargets: (isSpy && nightActive) ? players.filter(p=>!p.dead && p.id!==self.id).map(p=>({id:p.id,name:p.name, marked:!!p.markedSpy})) : [],
+    spyTargets: (isSpy && gamePhase==='night') ? players.filter(p=>!p.dead && p.id!==self.id).map(p=>({id:p.id,name:p.name, marked:!!p.markedSpy})) : [],
     spyInfo: isSpy ? {limit:spyLimit, marked: players.filter(p=>p.markedSpy && !p.dead).length} : null,
-    hunterTargets: (isHunter && nightActive) ? players.filter(p=>!p.dead && p.id!==self.id).map(p=>({id:p.id,name:p.name, marked:!!p.markedHunter})) : [],
+    hunterTargets: (isHunter && gamePhase==='night') ? players.filter(p=>!p.dead && p.id!==self.id).map(p=>({id:p.id,name:p.name, marked:!!p.markedHunter})) : [],
     hunterInfo: isHunter ? {limit:hunterLimit, marked: players.filter(p=>p.markedHunter && !p.dead).length, usedTotal:hunterUsesTotal} : null,
-    crazyTargets: (isCrazy && nightActive) ? players.filter(p=>!p.dead && p.id!==self.id).map(p=>({id:p.id,name:p.name, marked:!!p.markedCrazy})) : [],
+    crazyTargets: (isCrazy && gamePhase==='night') ? players.filter(p=>!p.dead && p.id!==self.id).map(p=>({id:p.id,name:p.name, marked:!!p.markedCrazy})) : [],
     crazyInfo: isCrazy ? {limit:crazyLimit, marked: players.filter(p=>p.markedCrazy && !p.dead).length, usedTotal:crazyUsesTotal} : null,
-    mafiaTeam: inMafiaChat ? players.filter(p=>(isMafiaRole(p.role) || p.spyJoinedMafia) && p.id !== self.id).map(p=>({id:p.id, name:p.name, dead:p.dead, isSpy:p.role==='جاسوس'})) : null,
-    mafiaChat: inMafiaChat ? mafiaChatMessages.slice(-50) : null,
-    night: {active: nightActive},
-    nightSummary: (!nightActive && lastNightSummary) ? lastNightSummary : null,
-    rolesRevealedToAll,
+    crazyProtectTargets: (isCrazy && gamePhase==='night') ? players.filter(p=>!p.dead).map(p=>({id:p.id,name:p.name, marked:!!(p.protected && p.protectedByCrazyId===self.id)})) : [],
+    crazyHasKilledThisRound: isCrazy ? players.some(p=>p.markedCrazy && !p.dead) : false,
+    crazyHasProtectedThisRound: isCrazy ? players.some(p=>p.protectedByCrazyId===self?.id) : false,
+    nightSummary: nightSummaryLines,
+    lastVoteResult: lastVoteResult,
+    mafiaChat: isMafiaChatMember ? {
+      isMember: true,
+      members: mafiaChatMemberIds.map(id=>{ const pl = players.find(p=>p.id===id); return pl ? pl.name : '؟'; }),
+      messages: mafiaChatMessages.slice(-100)
+    } : {isMember:false},
     timer: {seconds:timerSeconds, total:timerTotal, running:timerRunning, endTs:(timerRunning ? Date.now()+timerSeconds*1000 : null)},
     log: publicLog.slice(0,30),
     chat: chatMessages.slice(-50),
     remain: alive.length,
     round: roundNumber,
     gameOver: gameEnded ? gameEndedInfo : null,
-    voting: votingActive ? {
+    voting: (votingActive && gamePhase==='day') ? {
       active:true,
       candidates: [...alive.filter(p=>p.id !== playerId).map(p=>({id:p.id,name:p.name})), {id:'__skip__', name:'⏭️ تخطي (بدون طرد)'}],
       myVote: votes[playerId] || null,
@@ -2187,25 +2469,75 @@ function buildStateFor(playerId){
   };
 }
 
+function broadcastLobby(){
+  Object.values(hostConns).forEach(entry=>{
+    if(!entry.playerId){
+      try{
+        entry.conn.send({type:'lobbyInfo', phase: gamePhase, players: players.map(p=>({id:p.id, name:p.name, online:!!p.online, dead:!!p.dead}))});
+      }catch(e){}
+    }
+  });
+}
+
 function broadcastState(){
   if(!hosting) return;
-  const taken = new Set(Object.values(hostConns).filter(e=>e.playerId).map(e=>e.playerId));
   Object.values(hostConns).forEach(entry=>{
     try{
       if(entry.playerId){
         entry.conn.send(buildStateFor(entry.playerId));
       } else {
-        entry.conn.send({type:'roster', players: players.map(p=>({id:p.id, name:p.name, taken: taken.has(p.id)}))});
+        entry.conn.send({type:'lobbyInfo', phase: gamePhase, players: players.map(p=>({id:p.id, name:p.name, online:!!p.online, dead:!!p.dead}))});
       }
     }catch(e){}
   });
   renderHostPanel();
 }
 
+// كشف كل الأدوار لكل اللاعبين دفعة واحدة (يستخدمها الهوست عادة بنهاية اللعبة)
+function revealAllRoles(){
+  if(allRolesRevealed){
+    allRolesRevealed = false;
+    logEvent('🙈 تم إخفاء كل الأدوار عن اللاعبين مرة ثانية', null);
+  } else {
+    allRolesRevealed = true;
+    logEvent('🔓 تم كشف كل الأدوار لجميع اللاعبين', '🔓 الهوست كشف كل الأدوار للجميع');
+  }
+  save();
+  if(typeof hosting !== 'undefined' && hosting) broadcastState();
+}
+
+/* ---- Mafia secret chat: host master-view panel ---- */
+function toggleMafiaChat(){
+  const panel = document.getElementById('mafiaChatPanel');
+  if(!panel) return;
+  panel.classList.toggle('open');
+  if(panel.classList.contains('open')) renderMafiaChatPanel();
+}
+
+function renderMafiaChatPanel(){
+  const membersBar = document.getElementById('mafiaChatMembersBar');
+  const list = document.getElementById('mafiaChatList');
+  if(membersBar){
+    if(mafiaChatMemberIds.length === 0){
+      membersBar.textContent = 'ما فيه أعضاء بعد — بيفتح تلقائيًا لما يصير فيه مافيتين أو أكثر';
+    } else {
+      const names = mafiaChatMemberIds.map(id=>{ const p = players.find(pl=>pl.id===id); return p ? p.name : '؟'; });
+      membersBar.textContent = '👥 الأعضاء: ' + names.join('، ');
+    }
+  }
+  if(list){
+    list.innerHTML = mafiaChatMessages.length
+      ? mafiaChatMessages.map(m=>`<div class="log-entry chat-msg"><b>${escapeHtml(m.sender)}:</b> ${escapeHtml(m.text)}<span class="log-time">${m.time}</span></div>`).join('')
+      : '<div class="log-empty">ما فيه رسائل بعد بشات المافيا</div>';
+    list.scrollTop = list.scrollHeight;
+  }
+}
+
+
 /* ---- Player-side ---- */
 const _pv_roomParam = new URLSearchParams(location.search).get('room');
 let _pvConn = null;
-let _pvLastRoster = [];
+let _pvLastLobby = null;
 let _pvTimerInterval = null;
 let _pvLastState = null;
 let _pvRoomCode = null;
@@ -2288,15 +2620,18 @@ function pvRetryConnect(){
 
 function handlePlayerMessage(data){
   if(!data || !data.type) return;
-  if(data.type === 'roster'){
-    _pvLastRoster = data.players;
-    renderRosterChoice();
+  if(data.type === 'lobbyInfo'){
+    _pvLastLobby = data;
+    if(!_pvLastState) renderRegisterOrWaiting();
   } else if(data.type === 'claimed'){
     sessionStorage.setItem('veo_claimed_'+_pv_roomParam.toUpperCase(), data.playerId);
   } else if(data.type === 'claimError'){
     alert(data.message);
     sessionStorage.removeItem('veo_claimed_'+_pv_roomParam.toUpperCase());
-    renderRosterChoice();
+    _pvLastState = null;
+    renderRegisterOrWaiting();
+  } else if(data.type === 'registerError'){
+    alert(data.message);
   } else if(data.type === 'state'){
     _pvLastState = data;
     renderPlayerState(data);
@@ -2316,28 +2651,57 @@ function handlePlayerMessage(data){
     showPvToast(data.message);
   } else if(data.type === 'crazyResult'){
     showPvToast(data.message);
+  } else if(data.type === 'crazyProtectResult'){
+    showPvToast(data.message);
   }
 }
 
-function renderRosterChoice(){
-  if(_pvLastState) return; // already claimed & playing
+// شاشة حجز المقعد باللوبي: اللاعب يكتب اسمه بنفسه، ما فيه اختيار من قائمة جاهزة
+function renderRegisterOrWaiting(){
+  if(_pvLastState) return; // انضم بالفعل وصار وسط اللعبة
   const body = document.getElementById('pvBody');
-  if(_pvLastRoster.length === 0){
-    body.innerHTML = '<div class="pv-status">الهوست ما ضاف أسماء لسا، استنى شوي...</div>';
+  const info = _pvLastLobby;
+  if(!info){
+    body.innerHTML = '<div class="pv-status">⏳ يتم الاتصال بالهوست...</div>';
     return;
   }
+  if(info.phase !== 'lobby'){
+    body.innerHTML = `
+      <div class="pv-status" style="padding:14px 0">🚫 اللعبة بدأت بالفعل</div>
+      <div class="pv-status" style="font-size:12.5px">لو انقطع اتصالك بالمنتصف، اكتب نفس اسمك بالضبط وبنرجعك مكانك تلقائيًا</div>
+      <div class="reg-row">
+        <input id="pvNameInput" placeholder="اكتب اسمك اللي دخلت فيه..." maxlength="24" onkeydown="if(event.key==='Enter')pvRegister()">
+        <button class="pv-name-btn" onclick="pvRegister()">🔌 رجّعني للعبة</button>
+      </div>`;
+    return;
+  }
+  const seatedNames = info.players.map(p=>p.name);
   body.innerHTML = `
-    <div class="pv-status" style="padding:10px 0">اختر اسمك من القائمة</div>
+    <div class="pv-status" style="padding:10px 0">✍️ اكتب اسمك عشان تحجز مقعدك باللوبي</div>
+    <div class="reg-row">
+      <input id="pvNameInput" placeholder="اسمك..." maxlength="24" onkeydown="if(event.key==='Enter')pvRegister()">
+      <button class="pv-name-btn" onclick="pvRegister()">🪑 احجز مقعدك</button>
+    </div>
+    <div class="pv-section-title">👥 مقاعد محجوزة (${seatedNames.length})</div>
     <div class="pv-names">
-      ${_pvLastRoster.map(p=>`<button class="pv-name-btn" ${p.taken?'disabled':''} onclick="claimName('${p.id}')">${p.name}${p.taken?' (مشغول)':''}</button>`).join('')}
+      ${seatedNames.length ? seatedNames.map(n=>`<span class="pv-name-btn" style="cursor:default; opacity:.75">${escapeHtml(n)}</span>`).join('') : '<div class="log-empty">لسا محد حجز مقعده</div>'}
     </div>`;
 }
 
-function claimName(playerId){
-  if(!_pvConn) return;
-  _pvConn.send({type:'claim', playerId});
+function pvRegister(){
+  const input = document.getElementById('pvNameInput');
+  if(!input || !_pvConn) return;
+  const name = input.value.trim();
+  if(!name){ alert('اكتب اسمك أول'); return; }
+  _pvConn.send({type:'register', name});
 }
 
+// كشف الدور بالإمساك المطوّل (Hold to reveal) — يبان بس وأنت ضاغط، ويرجع يختفي لما ترفع إصبعك
+function pvHoldReveal(show){
+  const cell = document.getElementById('pvRoleCell');
+  if(cell) cell.classList.toggle('revealed', show);
+}
+// دعم اختياري بالنقر العادي على الكمبيوتر (toggle) لمن ما يقدر يمسك بالماوس بسهولة
 function pvToggleReveal(){
   const cell = document.getElementById('pvRoleCell');
   if(cell) cell.classList.toggle('revealed');
@@ -2354,13 +2718,27 @@ function renderPlayerState(state){
   }
   const body = document.getElementById('pvBody');
   const self = state.self;
-  let html = `<div class="pv-self-card">
-    <div class="pv-self-name">👤 ${self ? self.name : ''} ${state.round ? ('— 🌙 راوند '+state.round) : ''}</div>`;
+
+  // تأثير جوي: يبان الجو معتم بالليل، ويصفى بالنهار
+  const wrap = document.getElementById('playerView');
+  if(wrap){
+    wrap.classList.toggle('pv-atmosphere-night', state.phase === 'night');
+    wrap.classList.toggle('pv-atmosphere-day', state.phase === 'day');
+  }
+
+  const phaseLabel = state.phase === 'night' ? '🌙 الليل' : state.phase === 'day' ? '☀️ النهار' : '⏳ استعداد';
+  let html = `<div class="pv-phase-badge phase-${state.phase}">${phaseLabel}${state.round ? (' — راوند '+state.round) : ''}</div>`;
+
+  html += `<div class="pv-self-card">
+    <div class="pv-self-name">👤 ${self ? escapeHtml(self.name) : ''}</div>`;
   if(self && self.role){
-    html += `<div class="pv-role-cell" id="pvRoleCell" onclick="pvToggleReveal()">
+    html += `<div class="pv-role-cell" id="pvRoleCell"
+        onclick="pvToggleReveal()"
+        onmousedown="pvHoldReveal(true)" onmouseup="pvHoldReveal(false)" onmouseleave="pvHoldReveal(false)"
+        ontouchstart="pvHoldReveal(true)" ontouchend="pvHoldReveal(false)" ontouchcancel="pvHoldReveal(false)">
       <div class="pv-role-face-wrap">
-        <div class="pv-role-face front">🎭 اضغط للكشف</div>
-        <div class="pv-role-face back">${self.role}</div>
+        <div class="pv-role-face front">🎭 اضغط مطولاً للكشف</div>
+        <div class="pv-role-face back">${escapeHtml(self.role)}</div>
       </div>
     </div>`;
   } else {
@@ -2369,140 +2747,198 @@ function renderPlayerState(state){
   if(self && self.dead) html += `<div class="pv-dead-tag">⚰️ أنت خارج اللعبة</div>`;
   html += `</div>`;
 
+  // ملخص الليلة — يبان بشكل بارز على شاشة كل اللاعبين لما يبدأ النهار
+  if(state.nightSummary && state.nightSummary.length){
+    html += `<div class="pv-night-summary">
+      <div class="pv-night-summary-title">🌙 ملخص الليلة</div>
+      ${state.nightSummary.map(l=>`<div class="pv-night-summary-line">${l}</div>`).join('')}
+    </div>`;
+  }
+
+  // نتيجة آخر تصويت — يبان لمين صوّت كل واحد
+  if(state.lastVoteResult && state.lastVoteResult.breakdown){
+    html += `<div class="pv-night-summary pv-vote-result">
+      <div class="pv-night-summary-title">📣 نتيجة التصويت</div>
+      ${state.lastVoteResult.breakdown.map(b=>`<div class="pv-night-summary-line"><b>${escapeHtml(b.voter)}</b> ➡️ ${escapeHtml(b.choice)}</div>`).join('')}
+    </div>`;
+  }
+
   html += `<div class="pv-section-title">اللاعبين (${state.remain} أحياء)</div><div class="pv-players">`;
-  html += state.players.map(p=>`<div class="pv-player-row${p.dead?' dead':''}">${p.dead?'⚰️':'🙂'} ${p.name}${p.knownRole?`<span class="pv-known-tag">🔎 ${p.knownRole}</span>`:''}</div>`).join('');
+  html += state.players.map(p=>`<div class="pv-player-row${p.dead?' dead':''}">${p.dead?'⚰️':'🙂'} ${escapeHtml(p.name)}${p.knownRole?`<span class="pv-known-tag">🔎 ${escapeHtml(p.knownRole)}</span>`:''}${p.revealedRole?`<span class="pv-known-tag">🔓 ${escapeHtml(p.revealedRole)}</span>`:''}</div>`).join('');
   html += `</div>`;
 
-  if(state.voting && state.voting.active){
+  // التصويت يشتغل بس بالنهار
+  if(state.phase === 'day' && state.voting && state.voting.active){
     if(self && !self.dead){
       html += `<div class="pv-section-title">🗳️ التصويت جارٍ (${state.voting.votedCount}/${state.voting.totalVoters})</div><div class="pv-vote-panel">`;
-      html += state.voting.candidates.map(c=>`<button class="pv-vote-btn${state.voting.myVote===c.id?' picked':''}" onclick="pvVote('${c.id}')">${state.voting.myVote===c.id?'✅ ':''}${c.name}</button>`).join('');
+      html += state.voting.candidates.map(c=>`<button class="pv-vote-btn${state.voting.myVote===c.id?' picked':''}" onclick="pvVote('${c.id}')">${state.voting.myVote===c.id?'✅ ':''}${escapeHtml(c.name)}</button>`).join('');
       if(state.voting.myVote){
         html += `<button class="pv-vote-cancel" onclick="pvVote(null)">إلغاء صوتي</button>`;
       }
       html += `</div>`;
       if(state.voting.revealed && state.voting.tally){
-        html += `<div class="pv-vote-tally">` + state.voting.tally.map(t=>`<div class="pv-vote-tally-row"><span>${t.name}</span><b>${t.count}</b></div>`).join('') + `</div>`;
+        html += `<div class="pv-vote-tally">` + state.voting.tally.map(t=>`<div class="pv-vote-tally-row"><span>${escapeHtml(t.name)}</span><b>${t.count}</b></div>`).join('') + `</div>`;
       }
     } else {
       html += `<div class="pv-status" style="padding:6px 0">🗳️ التصويت جارٍ، أنت خارج اللعبة</div>`;
     }
   }
 
+  // كل قدرات الأدوار تشتغل بس بالليل
+  const nightActive = state.phase === 'night';
+
   if(state.isMafia && self && !self.dead){
     html += `<div class="pv-kill-panel"><div class="pv-section-title" style="margin-top:0">🔪 اختر ضحاياك</div>`;
-    if(state.killInfo){
-      html += `<div class="pv-kill-count">مستهدفين: ${state.killInfo.marked} / ${state.killInfo.limit}</div>`;
-    }
-    if(state.aliveTargets.length === 0){
-      html += `<div class="pv-status" style="padding:6px 0">ما فيه أهداف متاحة</div>`;
+    if(!nightActive){
+      html += `<div class="pv-status" style="padding:6px 0">🌙 هذي القدرة تشتغل بس بالليل</div>`;
     } else {
-      html += state.aliveTargets.map(t=>`<button class="pv-kill-btn${t.marked?' marked':''}" onclick="pvKill('${t.id}')">${t.marked?'🎯 إلغاء استهداف ':'استهداف '}${t.name}</button>`).join('');
+      if(state.killInfo){
+        html += `<div class="pv-kill-count">مستهدفين: ${state.killInfo.marked} / ${state.killInfo.limit}</div>`;
+      }
+      if(state.aliveTargets.length === 0){
+        html += `<div class="pv-status" style="padding:6px 0">ما فيه أهداف متاحة</div>`;
+      } else {
+        html += state.aliveTargets.map(t=>`<button class="pv-kill-btn${t.marked?' marked':''}" onclick="pvKill('${t.id}')">${t.marked?'🎯 إلغاء استهداف ':'استهداف '}${escapeHtml(t.name)}</button>`).join('');
+      }
     }
-    html += `</div>`;
-  }
-
-  if(state.mafiaTeam && self && !self.dead){
-    html += `<div class="pv-kill-panel mafia-team-panel"><div class="pv-section-title" style="margin-top:0">🖤 رفقتك بالمافيا</div>`;
-    if(state.mafiaTeam.length === 0){
-      html += `<div class="pv-status" style="padding:6px 0">وحيد؟ ما فيه رفقة ثانية لسا</div>`;
-    } else {
-      html += `<div class="pv-players">` + state.mafiaTeam.map(t=>`<div class="pv-player-row${t.dead?' dead':''}">${t.dead?'⚰️':'🙂'} ${t.name}${t.isSpy?'<span class="pv-known-tag">🕵️ جاسوس</span>':''}</div>`).join('') + `</div>`;
-    }
-    html += `<div class="pv-section-title">🖤 شات المافيا السري</div><div class="pv-chat-list" id="pvMafiaChatList">`;
-    const mchat = state.mafiaChat || [];
-    html += mchat.length ? mchat.map(m=>`<div class="log-entry chat-msg chat-player"><b>${escapeHtml(m.sender)}:</b> ${escapeHtml(m.text)}<span class="log-time">${m.time}</span></div>`).join('') : '<div class="log-empty">ما فيه رسائل لسا</div>';
-    html += `</div><div class="chat-input-row"><input id="pvMafiaChatInput" placeholder="اكتب لرفقتك السريين..." onkeydown="if(event.key==='Enter')pvSendMafiaChat()"><button onclick="pvSendMafiaChat()">إرسال</button></div>`;
     html += `</div>`;
   }
 
   if(state.isDoctor && self && !self.dead){
     html += `<div class="pv-kill-panel protect-panel"><div class="pv-section-title" style="margin-top:0">🩺 اختر من تحميه (تقدر تحمي نفسك)</div>`;
-    if(state.protectInfo){
-      html += `<div class="pv-kill-count">محميين: ${state.protectInfo.marked} / ${state.protectInfo.limit}</div>`;
-    }
-    if(!state.protectTargets || state.protectTargets.length === 0){
-      html += `<div class="pv-status" style="padding:6px 0">ما فيه أهداف متاحة</div>`;
+    if(!nightActive){
+      html += `<div class="pv-status" style="padding:6px 0">🌙 هذي القدرة تشتغل بس بالليل</div>`;
     } else {
-      html += state.protectTargets.map(t=>`<button class="pv-protect-btn${t.marked?' marked':''}" onclick="pvProtect('${t.id}')">${t.marked?'🛡️ إلغاء حماية ':'حماية '}${t.id===self.id?'(نفسك) ':''}${t.name}</button>`).join('');
+      if(state.protectInfo){
+        html += `<div class="pv-kill-count">محميين: ${state.protectInfo.marked} / ${state.protectInfo.limit}</div>`;
+      }
+      if(!state.protectTargets || state.protectTargets.length === 0){
+        html += `<div class="pv-status" style="padding:6px 0">ما فيه أهداف متاحة</div>`;
+      } else {
+        html += state.protectTargets.map(t=>`<button class="pv-protect-btn${t.marked?' marked':''}" onclick="pvProtect('${t.id}')">${t.marked?'🛡️ إلغاء حماية ':'حماية '}${t.id===self.id?'(نفسك) ':''}${escapeHtml(t.name)}</button>`).join('');
+      }
     }
     html += `</div>`;
   }
 
   if(state.isElder && self && !self.dead){
-    html += `<div class="pv-kill-panel elder-panel"><div class="pv-section-title" style="margin-top:0">👁️ اختر لاعب لتشوف روله (بتطلع النتيجة بعد نهاية الراوند)</div>`;
-    if(state.elderInfo){
-      html += `<div class="pv-kill-count">استخدامات: ${state.elderInfo.used} / ${state.elderInfo.limit}</div>`;
-    }
-    if(state.elderInfo && state.elderInfo.used >= state.elderInfo.limit && !state.elderTargets.some(t=>t.marked)){
-      html += `<div class="pv-status" style="padding:6px 0">🚫 استخدمت حد استخداماتك هذا الراوند، انتظر الراوند الجاي</div>`;
-    } else if(!state.elderTargets || state.elderTargets.length === 0){
-      html += `<div class="pv-status" style="padding:6px 0">ما فيه أهداف متاحة</div>`;
+    html += `<div class="pv-kill-panel elder-panel"><div class="pv-section-title" style="margin-top:0">👁️ اختر لاعب لتشوف روله (بتطلع النتيجة بعد نهاية الليل)</div>`;
+    if(!nightActive){
+      html += `<div class="pv-status" style="padding:6px 0">🌙 هذي القدرة تشتغل بس بالليل</div>`;
     } else {
-      html += state.elderTargets.map(t=>`<button class="pv-elder-btn${t.marked?' marked':''}" onclick="pvElderPeek('${t.id}')">👁️ ${t.marked?'إلغاء السؤال عن ':''}${t.id===self.id?'(نفسك) ':''}${t.name}</button>`).join('');
+      if(state.elderInfo){
+        html += `<div class="pv-kill-count">استخدامات: ${state.elderInfo.used} / ${state.elderInfo.limit}</div>`;
+      }
+      if(state.elderInfo && state.elderInfo.used >= state.elderInfo.limit && !state.elderTargets.some(t=>t.marked)){
+        html += `<div class="pv-status" style="padding:6px 0">🚫 استخدمت حد استخداماتك هذا الراوند، انتظر الراوند الجاي</div>`;
+      } else if(!state.elderTargets || state.elderTargets.length === 0){
+        html += `<div class="pv-status" style="padding:6px 0">ما فيه أهداف متاحة</div>`;
+      } else {
+        html += state.elderTargets.map(t=>`<button class="pv-elder-btn${t.marked?' marked':''}" onclick="pvElderPeek('${t.id}')">👁️ ${t.marked?'إلغاء السؤال عن ':''}${t.id===self.id?'(نفسك) ':''}${escapeHtml(t.name)}</button>`).join('');
+      }
     }
     html += `</div>`;
   }
 
   if(state.isSpy && self && !self.dead){
     html += `<div class="pv-kill-panel elder-panel"><div class="pv-section-title" style="margin-top:0">🕵️ اختر من تتجسس عليهم</div>`;
-    if(state.spyInfo){
-      html += `<div class="pv-kill-count">مستهدفين: ${state.spyInfo.marked} / ${state.spyInfo.limit}</div>`;
-    }
-    if(!state.spyTargets || state.spyTargets.length === 0){
-      html += `<div class="pv-status" style="padding:6px 0">ما فيه أهداف متاحة</div>`;
+    if(!nightActive){
+      html += `<div class="pv-status" style="padding:6px 0">🌙 هذي القدرة تشتغل بس بالليل</div>`;
     } else {
-      html += state.spyTargets.map(t=>`<button class="pv-elder-btn${t.marked?' marked':''}" onclick="pvSpy('${t.id}')">${t.marked?'🕵️ إلغاء تجسس ':'تجسس '}${t.name}</button>`).join('');
+      if(state.spyInfo){
+        html += `<div class="pv-kill-count">مستهدفين: ${state.spyInfo.marked} / ${state.spyInfo.limit}</div>`;
+      }
+      if(!state.spyTargets || state.spyTargets.length === 0){
+        html += `<div class="pv-status" style="padding:6px 0">ما فيه أهداف متاحة</div>`;
+      } else {
+        html += state.spyTargets.map(t=>`<button class="pv-elder-btn${t.marked?' marked':''}" onclick="pvSpy('${t.id}')">${t.marked?'🕵️ إلغاء تجسس ':'تجسس '}${escapeHtml(t.name)}</button>`).join('');
+      }
     }
     html += `</div>`;
   }
 
   if(state.isHunter && self && !self.dead){
     html += `<div class="pv-kill-panel hunter-panel"><div class="pv-section-title" style="margin-top:0">🏹 اختر هدف صيدك (رصاصة نهائية طول اللعبة)</div>`;
-    const hunterRemaining = state.hunterInfo ? (state.hunterInfo.limit - state.hunterInfo.usedTotal) : 0;
-    const hunterAlreadyPicked = state.hunterTargets && state.hunterTargets.some(t=>t.marked);
-    if(state.hunterInfo){
-      html += `<div class="pv-kill-count">الرصاص المتاح: ${hunterRemaining}</div>`;
-    }
-    if(!state.hunterTargets || state.hunterTargets.length === 0){
-      html += `<div class="pv-status" style="padding:6px 0">ما فيه أهداف متاحة</div>`;
-    } else if(hunterRemaining <= 0 && !hunterAlreadyPicked){
-      html += `<div class="pv-status" style="padding:6px 0">🚫 استخدمت رصاصتك الوحيدة طول اللعبة</div>`;
+    if(!nightActive){
+      html += `<div class="pv-status" style="padding:6px 0">🌙 هذي القدرة تشتغل بس بالليل</div>`;
     } else {
-      html += state.hunterTargets.map(t=>{
-        if(t.marked) return `<button class="pv-kill-btn marked" disabled>🏹 هدفك النهائي: ${t.name}</button>`;
-        if(hunterAlreadyPicked) return `<button class="pv-kill-btn" disabled>${t.name}</button>`;
-        return `<button class="pv-kill-btn" onclick="pvHunter('${t.id}')">🎯 صيد ${t.name}</button>`;
-      }).join('');
+      const hunterRemaining = state.hunterInfo ? (state.hunterInfo.limit - state.hunterInfo.usedTotal) : 0;
+      const hunterAlreadyPicked = state.hunterTargets && state.hunterTargets.some(t=>t.marked);
+      if(state.hunterInfo){
+        html += `<div class="pv-kill-count">الرصاص المتاح: ${hunterRemaining}</div>`;
+      }
+      if(!state.hunterTargets || state.hunterTargets.length === 0){
+        html += `<div class="pv-status" style="padding:6px 0">ما فيه أهداف متاحة</div>`;
+      } else if(hunterRemaining <= 0 && !hunterAlreadyPicked){
+        html += `<div class="pv-status" style="padding:6px 0">🚫 استخدمت رصاصتك الوحيدة طول اللعبة</div>`;
+      } else {
+        html += state.hunterTargets.map(t=>{
+          if(t.marked) return `<button class="pv-kill-btn marked" disabled>🏹 هدفك النهائي: ${escapeHtml(t.name)}</button>`;
+          if(hunterAlreadyPicked) return `<button class="pv-kill-btn" disabled>${escapeHtml(t.name)}</button>`;
+          return `<button class="pv-kill-btn" onclick="pvHunter('${t.id}')">🎯 صيد ${escapeHtml(t.name)}</button>`;
+        }).join('');
+      }
+      html += `<div class="pv-status" style="padding:6px 0; font-size:11px">⚠️ هدفك بيموت أكيد. لو طلع مافيا بيعلن رولها، غير كذا بيموت بصدمة عكسية بدون ما يظهر روله</div>`;
     }
-    html += `<div class="pv-status" style="padding:6px 0; font-size:11px">⚠️ لو طلع صيدك مو مافيا، تموت أنت بدال الهدف</div>`;
     html += `</div>`;
   }
 
   if(state.isCrazy && self && !self.dead){
-    html += `<div class="pv-kill-panel crazy-panel"><div class="pv-section-title" style="margin-top:0">🃏 اختر ضحيتك (اختيار نهائي طول اللعبة)</div>`;
-    const remaining = state.crazyInfo ? (state.crazyInfo.limit - state.crazyInfo.usedTotal) : 0;
-    const alreadyPicked = state.crazyTargets && state.crazyTargets.some(t=>t.marked);
-    if(state.crazyInfo){
-      html += `<div class="pv-kill-count">القتلات المتاحة: ${remaining}</div>`;
-    }
-    if(!state.crazyTargets || state.crazyTargets.length === 0){
-      html += `<div class="pv-status" style="padding:6px 0">ما فيه أهداف متاحة</div>`;
-    } else if(remaining <= 0 && !alreadyPicked){
-      html += `<div class="pv-status" style="padding:6px 0">🚫 استخدمت قتلتك الوحيدة طول اللعبة</div>`;
+    html += `<div class="pv-kill-panel crazy-panel"><div class="pv-section-title" style="margin-top:0">🃏 اختر: قتل أو حماية هالليلة</div>`;
+    if(!nightActive){
+      html += `<div class="pv-status" style="padding:6px 0">🌙 هذي القدرة تشتغل بس بالليل</div>`;
     } else {
-      html += state.crazyTargets.map(t=>{
-        if(t.marked) return `<button class="pv-vote-btn picked" disabled>🃏 هدفك النهائي: ${t.name}</button>`;
-        if(alreadyPicked) return `<button class="pv-vote-btn" disabled>${t.name}</button>`;
-        return `<button class="pv-vote-btn" onclick="pvCrazy('${t.id}')">قتلة ${t.name}</button>`;
-      }).join('');
+      const remaining = state.crazyInfo ? (state.crazyInfo.limit - state.crazyInfo.usedTotal) : 0;
+      const alreadyPicked = state.crazyTargets && state.crazyTargets.some(t=>t.marked);
+      const alreadyProtected = state.crazyHasProtectedThisRound;
+
+      html += `<div class="pv-kill-count">القتلات المتاحة طول اللعبة: ${remaining}</div>`;
+      html += `<div class="pv-status" style="padding:2px 0 8px; font-size:11.5px">🔪 القتل: اختيار نهائي طول اللعبة. 🛡️ الحماية: تقدر تغيرها كل ليلة، بس مو بنفس ليلة القتل</div>`;
+
+      html += `<div class="pv-crazy-subtitle">🔪 قتل (نهائي)</div>`;
+      if(!state.crazyTargets || state.crazyTargets.length === 0){
+        html += `<div class="pv-status" style="padding:6px 0">ما فيه أهداف متاحة</div>`;
+      } else if(remaining <= 0 && !alreadyPicked){
+        html += `<div class="pv-status" style="padding:6px 0">🚫 استخدمت قتلتك الوحيدة طول اللعبة</div>`;
+      } else if(alreadyProtected){
+        html += `<div class="pv-status" style="padding:6px 0">🚫 اخترت الحماية هالليلة، ما تقدر تقتل بنفس الوقت</div>`;
+      } else {
+        html += state.crazyTargets.map(t=>{
+          if(t.marked) return `<button class="pv-vote-btn picked" disabled>🃏 هدفك النهائي: ${escapeHtml(t.name)}</button>`;
+          if(alreadyPicked) return `<button class="pv-vote-btn" disabled>${escapeHtml(t.name)}</button>`;
+          return `<button class="pv-vote-btn" onclick="pvCrazy('${t.id}')">قتلة ${escapeHtml(t.name)}</button>`;
+        }).join('');
+      }
+
+      html += `<div class="pv-crazy-subtitle">🛡️ حماية (بدل القتل)</div>`;
+      if(!state.crazyProtectTargets || state.crazyProtectTargets.length === 0){
+        html += `<div class="pv-status" style="padding:6px 0">ما فيه أهداف متاحة</div>`;
+      } else if(state.crazyHasKilledThisRound){
+        html += `<div class="pv-status" style="padding:6px 0">🚫 اخترت القتل هالليلة، ما تقدر تحمي بنفس الوقت</div>`;
+      } else {
+        html += state.crazyProtectTargets.map(t=>`<button class="pv-protect-btn${t.marked?' marked':''}" onclick="pvCrazyProtect('${t.id}')">${t.marked?'🛡️ إلغاء حماية ':'حماية '}${t.id===self.id?'(نفسك) ':''}${escapeHtml(t.name)}</button>`).join('');
+      }
     }
     html += `</div>`;
   }
 
+  // شات المافيا السري — يبان بس لأعضاء المافيا (والجاسوس لو اكتشفهم)
+  if(state.mafiaChat && state.mafiaChat.isMember && self && !self.dead){
+    html += `<div class="pv-mafia-chat">
+      <div class="pv-section-title" style="margin-top:0">🕶️ شات المافيا السري</div>
+      <div class="mafia-chat-members" style="border:none; padding:0 0 8px">👥 ${state.mafiaChat.members.map(escapeHtml).join('، ')}</div>
+      <div class="pv-chat-list" id="pvMafiaChatList">`;
+    html += state.mafiaChat.messages.length
+      ? state.mafiaChat.messages.map(m=>`<div class="log-entry chat-msg"><b>${escapeHtml(m.sender)}:</b> ${escapeHtml(m.text)}<span class="log-time">${m.time}</span></div>`).join('')
+      : '<div class="log-empty">ما فيه رسائل لسا، هذا شاتكم السري</div>';
+    html += `</div>
+      <div class="chat-input-row"><input id="pvMafiaChatInput" placeholder="رسالة سرية للمافيا..." onkeydown="if(event.key==='Enter')pvSendMafiaChat()"><button onclick="pvSendMafiaChat()">إرسال</button></div>
+    </div>`;
+  }
+
   html += `<div class="pv-timer" id="pvTimer">${formatTime(state.timer.seconds)}</div>`;
 
-  html += `<div class="pv-section-title">💬 الشات</div><div class="pv-chat-list" id="pvChatList">`;
+  html += `<div class="pv-section-title">💬 الشات العام</div><div class="pv-chat-list" id="pvChatList">`;
   const chat = state.chat || [];
   html += chat.length ? chat.map(m=>`<div class="log-entry chat-msg ${m.isHost?'chat-host':'chat-player'}"><b>${m.isHost?'🎙️ الهوست':escapeHtml(m.sender)}:</b> ${escapeHtml(m.text)}<span class="log-time">${m.time}</span></div>`).join('') : '<div class="log-empty">ما فيه رسائل لسا</div>';
   html += `</div>`;
@@ -2569,6 +3005,20 @@ function pvCrazy(targetId){
   _pvConn.send({type:'markCrazy', targetId});
 }
 
+function pvCrazyProtect(targetId){
+  if(!_pvConn) return;
+  _pvConn.send({type:'markCrazyProtect', targetId});
+}
+
+function pvSendMafiaChat(){
+  const input = document.getElementById('pvMafiaChatInput');
+  if(!input || !_pvConn) return;
+  const text = input.value.trim();
+  if(!text) return;
+  _pvConn.send({type:'mafiaChat', text});
+  input.value = '';
+}
+
 function pvVote(targetId){
   if(!_pvConn) return;
   _pvConn.send({type:'castVote', targetId});
@@ -2580,15 +3030,6 @@ function pvSendChat(){
   const text = input.value.trim().slice(0,300);
   if(!text || !_pvConn) return;
   _pvConn.send({type:'chat', text});
-  input.value = '';
-}
-
-function pvSendMafiaChat(){
-  const input = document.getElementById('pvMafiaChatInput');
-  if(!input) return;
-  const text = input.value.trim().slice(0,300);
-  if(!text || !_pvConn) return;
-  _pvConn.send({type:'mafiaChat', text});
   input.value = '';
 }
 
